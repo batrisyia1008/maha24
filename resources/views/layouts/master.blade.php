@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>MINI 4WD MHX CUP 2023 | @yield('title-mini4wd')</title>
+    <title>MAHA 2024 | @yield('title-mini4wd')</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
     <meta content name="description" />
     <meta content name="author" />
@@ -21,21 +21,21 @@
 </head>
 <body>
 
-<div class="bg-transparent">
-    <div class="header-bg-image" {{--style="background-image: url({{ asset('assets/images/mini-4wd/finish-flag@4x.png') }});"--}}>
-        <div class="container p-sm-5 px-3 pt-3 pb-5">
-            <div class="col-md-6 mx-auto">
-                <a href="{{--{{ route('mhxcup.welcome') }}--}}">
-                    <img src="{{ asset('assets/images/matec-01.png') }}" alt="" class="img-fluid d-block mx-auto">
-                </a>
-            </div>
+{{--<div class="bg-transparent"--}}
+    {{--<div class="header-bg-image" {{--style="background-image: url({{ asset('assets/images/mini-4wd/finish-flag@4x.png') }});">--}}
+        {{--<div class="container p-sm-5 px-3 pt-3 pb-5">--}}
+            {{--<div class="col-md-6 mx-auto">--}}
+                {{--<a href="{{--{{ route('mhxcup.welcome') }}">--}}
+                    {{--<img src="{{ asset('assets/images/matec-01.png') }}" alt="" class="img-fluid d-block mx-auto">--}}
+                {{--</a>--}}
+            {{--</div>
         </div>
     </div>
-</div>
+</div>--}}
 
 @yield('page-minicup')
 
-<div class="bg-black pt-sm-0 pt-5 pb-sm-0 pb-5">
+{{--<div class="bg-black pt-sm-0 pt-5 pb-sm-0 pb-5">
     <div class="container p-sm-5">
         <div class="row g-5 align-items-center justify-content-center">
             <div class="col-md-8">
@@ -47,14 +47,14 @@
             <div class="col-md-2">
                 <img src="{{ asset('assets/images/mini-4wd/supported-by@4x.png') }}" alt="" class="d-block mx-auto h-50px">
             </div>--}}
-        </div>
+        {{--</div>
 
         <h6 class="mt-5 mb-0 text-center text-white">
             &copy; Copyright of Fita Hobby Shop {{ date('Y') }} <br/>
             Powered and designed by <a class="text-white" href="#">Ardia Nexus Sdn. Bhd.</a>
         </h6>
     </div>
-</div>
+</div>--}}
 
 <script type="text/javascript" src="{{ asset('assets/js/blog/vendor.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/blog/app.min.js') }}"></script>

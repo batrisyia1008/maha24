@@ -14,4 +14,8 @@ class MahaController extends Controller
     public function register(){
         return response()->view('maha.register');
     }
+
+    public function qrcode(){
+        return response()->view('maha.qr');
+    }
 }
