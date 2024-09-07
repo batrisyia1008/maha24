@@ -66,7 +66,7 @@
                 // Create a link element
                 var link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
-                link.download = 'screenshot.png'; // Set the file name for download
+                link.download = {{ $data->uniq }} + '-' + {{ $data->ic_number }} + '.png'; // Set the file name for download
 
                 // Append link to the body, click it to trigger download, then remove it
                 document.body.appendChild(link);
