@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
-    return 'Test';
-});
-Route::get('welcome', [MahaController::class, 'welcome'])->name('welcome');
+Route::get('/', [MahaController::class, 'welcome'])->name('welcome');
 Route::get('register-form', [MahaController::class, 'register'])->name('register-form');
 Route::get('qrcode', [MahaController::class, 'qrcode'])->name('qrcode');
