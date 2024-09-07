@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title-mini4wd', 'Racer Details')
+@section('title-mini4wd', 'Maklumat Peserta')
 
 @push('onpagecss')
     <style>
@@ -9,6 +9,26 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
+        .btn-green {
+            --bs-btn-color: #294626;
+            --bs-btn-bg: #294626;
+            --bs-btn-border-color: #294626;
+            --bs-btn-hover-color: #294626;
+            --bs-btn-hover-bg: #294626;
+            --bs-btn-hover-border-color: #294626;
+            --bs-btn-focus-shadow-rgb: 41,70,38,255;
+            --bs-btn-active-color: #294626;
+            --bs-btn-active-bg: #294626;
+            --bs-btn-active-border-color: #294626;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(41,70,38,255);
+            --bs-btn-disabled-color: #294626;
+            --bs-btn-disabled-bg: #294626;
+            --bs-btn-disabled-border-color: #294626;
+        }
+        .logo{
+            width: -20%;
+        }
+
     </style>
 @endpush
 
@@ -100,12 +120,6 @@
                 phone_number: {
                     required: true
                 },
-                email: {
-                    required: true
-                },
-                nickname: {
-                    required: true
-                },
                 registration: {
                     required: true,
                     min: 1
@@ -116,12 +130,9 @@
             };
 
             var validationMessages = {
-                full_name: "Please provide a full name.",
-                identification_card_number: "Please provide identification card number.",
-                phone_number: "Please provide a phone number.",
-                email: "Please provide a valid email address.",
-                nickname: "Please provide a nickname.",
-                registration: "Please select your registration.",
+                full_name: "Sila isi nama penuh anda.",
+                identification_card_number: "Sila isi nombor Kad Pengenalan anda.",
+                phone_number: "Sila isi nombor telefon anda.",
                 // receipt: "Please upload the receipt here."
             };
 
@@ -385,14 +396,16 @@
 @endpush
 
 @section('page-minicup')
+<div class="container col-lg-4 text-center mr-sm-4">
+    <img src="{{ asset('assets/images/maha/logo_maha_100yrs.png') }}" class="logo img-fluid">
+</div>
+
+
     <div class="container p-sm-5 p-3">
-        <h2 class="text-center mt-sm-0 mb-sm-5 mt-4 mb-5 font-weight-700 text-uppercase text-white">{{--{{ $category['category'] }}--}}</h2>
-
         <div class="pb-5">
-
             <div class="row">
                 <div id="confirm" class="col-md-6 mx-auto">
-                    <form action="{{--{{ route('register.form.post') }}--}}" method="POST" id="racer_register" accept-charset="utf-8" enctype="multipart/form-data">
+                    <form action="{{ route('qrcode') }}" method="GET" id="racer_register" accept-charset="utf-8" enctype="multipart/form-data">
                         @csrf
                         {{--<div class="card mb-4" id="section_banner">
                              <div class="card-body">
@@ -409,78 +422,125 @@
                         <div class="card mb-4" id="section_a">
                             <div class="card-body">
 
-                                <h5 class="font-weight-700">Section A - Racer Particular</h5>
+                                <h5 class="font-weight-700">Bahagian A - Maklumat Peserta</h5>
                                 <hr class="my-10px">
 
                             <input type="hidden" name="category" value="{{--{{ $category['category'] }}--}}" class="form-control mb-3" readonly>
                             <input type="hidden" name="price_category" value="{{--{{ $category['price_category'] }}--}} " class="form-control mb-3" readonly>
 
                                 <div class="mb-3">
-                                    <label for="full_name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                                    <label for="full_name" class="form-label">Nama Penuh <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="" name="full_name" value="{{ old('full_name') }}">
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="identification_card_number" class="form-label">Identification Card Number <span class="text-danger">*</span></label>
+                                    <label for="identification_card_number" class="form-label">Nombor Kad Pengenalan <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="" name="identification_card_number" value="{{ old('identification_card_number') }}">
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="phone_number" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                    <label for="phone_number" class="form-label">Nombor Telefon <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="" name="phone_number" value="{{ old('phone_number') }}">
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">Alamat Email </label>
                                     <input type="email" class="form-control" id="" name="email" value="{{ old('email') }}">
                                     <div class="invalid-feedback"></div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="nickname" class="form-label">Nickname <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control text-uppercase" id="" name="nickname" value="{{ old('nickname') }}" maxlength="7">
-                                    <div id="" class="form-text">
-                                        Not more than 7 character, alphabet only, to be use as Called Up name.
+                                    <label for="nickname" class="form-label">Bagaimanakah anda mengetahui tentang acara ini?<span class="text-danger">*</span></label>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Media Sosial (Facebook, X, Instagram, etc.)</label>
                                     </div>
-                                    <div class="invalid-feedback"></div>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Email dan Surat Khabar</label>
+                                    </div>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Kalendar Acara (Dalam Talian atau Fizikal)</label>
+                                    </div>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Iklan (Dalam Talian atau Luar Talian)</label>
+                                    </div>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Sokongan Selebriti atau Pempengaruh</label>
+                                    </div>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Buku atau Artikel</label>
+                                    </div>
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" >
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Rakan, Keluarga atau Rakan Sekerja</label>
+                                    </div>
+
+
+                                    
                                 </div>
 
-                                <div class="mb-0">
-                                    <label for="team_group" class="form-label">Team / Group</label>
-                                    <input type="text" class="form-control" id="" name="team_group" value="{{ old('team_group') }}">
-                                    <div id="" class="form-text">
-                                        If not applicable, please write NA.
-                                    </div>
-                                </div>
+                                {{--<div class="mb-0">--}}
+                                    {{--<label for="team_group" class="form-label">Team / Group</label>--}}
+                                    {{--<input type="text" class="form-control" id="" name="team_group" value="{{ old('team_group') }}">--}}
+                                    {{--<div id="" class="form-text">--}}
+                                        {{--If not applicable, please write NA.--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
                             </div>
                         </div>
 
                         <div class="card mb-4" id="section_b">
                             <div class="card-body">
-                                <h5 class="font-weight-700">Section B - Race Fee</h5>
+                                <h5 class="font-weight-700">Bahagian B - Muat Naik Resit</h5>
                                 <hr class="my-10px">
 
                                 <div class="mb-3">
-                                    <label for="registrationSlot" class="form-label">Please select your registration (8 Slot per card)</label>
+                                    <label for="registrationSlot" class="form-label">Muat Naik Resit Anda Disni</label>
 
-                                    <select name="registration" id="registrationSlot" class="form-control">
-                                    </select>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile02">
+                                    </div>
 
-                                <div class="invalid-feedback"></div>
-                                <div id="" class="form-text">
-                                    RM{{--{{ $category['price_category'] }}--}} per registration
-                                </div>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile02">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile02">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile02">
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile02">
+                                    </div>
+                              
+                               
                             </div>
                         </div>
                     </div>
 
                         <div class="card mb-4" id="section_c">
                             <div class="card-body">
-                                <h5 class="font-weight-700">Section C - Race ID</h5>
+                                <h5 class="font-weight-700">Bahagian C - Jumlah Pembelian</h5>
                                 <hr class="my-10px">
 
                                 <div id="merchandise_">
@@ -496,10 +556,9 @@
                                     <label for="total_cost" class="form-label mb-1">
                                         {{--Please remit the below total in RM, using bank transfer to <br>
                                         MAYBANK, INFINITY PULSE SDN BHD, <a id="copyLink" href="">564810562363</a>  <input type="hidden" value="564810562363" id="textToCopy">--}}
-                                        Total Cost
+                                        Jumlah Pembelian
                                     </label>
-                                    <input type="hidden" name="sub_total" value="" readonly>
-                                    <input type="text" name="total" value="" class="form-control mb-3" readonly>
+                                    <input type="text" inputmode="numeric" name="total" value="" class="form-control mb-3">
                                     {{--<img src="{{ asset('assets/images/mini-4wd/mhx2024_mini_4wd_qrcode.png') }}" alt="" class="img-fluid">--}}
                                 </div>
 
@@ -513,7 +572,7 @@
                                 {{-- </div>--}}
 
                                 <div class="mb-3">
-                                    <p class="mb-0 text-center">By clicking <strong>"Proceed to Pay"</strong>, I hereby agree and consent to the <a target="_blank" href="{{ asset('assets/upload/mhx2024_events-tnc.pdf') }}">Terms & Conditions</a> of the event.</p>
+                                    <!-- <p class="mb-0 text-center">By clicking <strong>"Proceed to Pay"</strong>, I hereby agree and consent to the <a target="_blank" href="{{ asset('assets/upload/mhx2024_events-tnc.pdf') }}">Terms & Conditions</a> of the event.</p> -->
                                 </div>
 
                                 <div class="row justify-content-center">
@@ -527,8 +586,8 @@
                                     {{--</div>--}}
                                     <div class="col-md-6">
                                         <div class="mb-0 text-center">
-                                            <button type="submit" class="btn btn-red btn-lg w-100 text-white">
-                                                Proceed to Online
+                                            <button type="submit" class="btn btn-green btn-lg w-100 text-white">
+                                                Submit
                                             </button>
                                         </div>
                                     </div>
