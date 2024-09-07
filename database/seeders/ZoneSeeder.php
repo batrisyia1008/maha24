@@ -172,6 +172,10 @@ class ZoneSeeder extends Seeder
                 'name'        => 'LAMAN TERNAKAN',
                 'description' => null,
             ],
+            [
+                'name'        => 'WEB SITE',
+                'description' => null,
+            ],
         ];
 
         foreach ($zones as $zone) {
