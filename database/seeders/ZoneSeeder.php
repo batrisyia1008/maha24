@@ -179,17 +179,18 @@ class ZoneSeeder extends Seeder
         ];
 
         foreach ($zones as $zone) {
+            $filePath        = null;
             $zoneName       = Str::slug($zone['name']);
 
             $num_str        = sprintf("%06d", mt_rand(1, 999999));
             $uniq           = 'MAHA24_ZONE_' . strtoupper($num_str) . '_' . $zoneName;
-            $qrcodeFilePath = public_path('assets/qrcode/' . $uniq . '.png');
+            // $qrcodeFilePath = public_path('assets/qrcode/' . $uniq . '.png');
 
             // $urlGenerate    = URL::to('register-form?zone=' . $zoneName);
-            $urlGenerate    = 'https://maha2024.online/register-form?zone=' . $zoneName;
+            // $urlGenerate    = 'https://maha2024.online/register-form?zone=' . $zoneName;
 
-            QrCode::size(500)->format('png')->generate($urlGenerate, $qrcodeFilePath);
-            $filePath = 'assets/qrcode/' . $uniq . '.png';
+            // QrCode::size(500)->format('png')->generate($urlGenerate, $qrcodeFilePath);
+            // $filePath = 'assets/qrcode/' . $uniq . '.png';
 
             Zone::create([
                 'uniq'        => $uniq,
