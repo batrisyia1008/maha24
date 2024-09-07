@@ -332,13 +332,48 @@ ul.custom-accordion li a.accordion-toggle:hover {
     }
 }
 
+.btn-maha-green {
+    color:#fff;
+    background-color:#405b2f;
+    border-color:#405b2f;
+}
+.btn-maha-green:hover {
+    color:#fff !important;
+    background-color:#608439 !important;
+    border-color:#608439 !important
+}
+.btn-check:focus+.btn-maha-green,.btn-maha-green:focus,.btn-maha-green.focus {
+    color:#fff;
+    background-color:#608439;
+    border-color:#608439;
+    box-shadow:none
+}
+.btn-check:checked+.btn-maha-green,.btn-check:active+.btn-maha-green,.btn-maha-green:active,.btn-maha-green.active,.btn-maha-green.show.dropdown-toggle,.show>.btn-maha-green.dropdown-toggle {
+    color:#fff !important;
+    background-color:#608439 !important;
+    border-color:#608439 !important
+}
+.btn-maha-green.disabled,.btn-maha-green:disabled {
+    color:#fff !important;
+    background-color:#405b2f !important;
+    border-color:#405b2f !important;
+    box-shadow:none !important
+}
+.btn-group .btn-maha-green,.input-group .btn-maha-green {
+    border-right:var(--bs-border-width) solid #608439;
+    border-left:var(--bs-border-width) solid #608439
+}
+.btn-group-vertical .btn-maha-green {
+    border-top-color:#608439;
+    border-bottom-color:#608439
+}
 
 ._failed{ border-bottom: solid 4px red !important; }
 ._failed i{  color:red !important;  }
 
 ._success {
     box-shadow: 0 15px 25px #00000019;
-    padding: 45px;
+    padding: 15px;
     width: 100%;
     text-align: center;
     margin: 40px auto;
@@ -363,4 +398,49 @@ ul.custom-accordion li a.accordion-toggle:hover {
     font-size: 18px;
     color: #495057;
     font-weight: 500;
+}
+
+
+.maha100th-logo-img {
+    max-width: 75%;
+}
+.maha100th-logo {
+    position: relative;
+}
+.maha100th-logo::before,
+.maha100th-logo::after {
+    content: '';
+    display: block;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.maha100th-logo::before {
+    content: '';
+    top: -50px;
+    left: -50px;
+    background-image: url('../../assets/images/maha/maha-2024-image-slice-08.png');
+    background-position: center center;
+}
+.maha100th-logo::after {
+    content: '';
+    bottom: -50px;
+    right: -100px;
+    background-image: url('../../assets/images/maha/maha-2024-image-slice-09.png');
+    background-position: center center;
+}
+@media only screen and (max-width: 600px) {
+    .maha100th-logo::before,
+    .maha100th-logo::after {
+        height: 150px;
+        width: 150px;
+    }
+    .maha100th-logo::before {
+        left: 0px;
+    }
+    .maha100th-logo::after {
+        right: 0px;
+    }
 }

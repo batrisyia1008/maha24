@@ -2,190 +2,92 @@
 
 @section('title-mini4wd', 'Welcome')
 
+@push('onpagecss')
+    <style>
+        body {
+            background-image: url({{ asset('assets/images/maha/maha-2024-image-slice-06.png') }});
+            background-size: cover;
+            background-position: bottom center;
+            background-repeat: no-repeat;
+        }
+        .button-xxl {
+            padding: 1em;
+            font-size: 1.25rem;
+        }
+        @media only screen and (max-width: 600px) {
+            body {
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+            .button-xxl {
+                padding: inherit;
+                font-size: inherit;
+            }
+        }
+    </style>
+@endpush
+
+@push('onpagescript')
+<script>
+    $(document).ready(function() {
+        // Function to adjust the height of welcome-body
+        function adjustWelcomeBodyHeight() {
+            var windowWidth = $(window).width();
+            if (windowWidth <= 600) {
+                // Get the height of the .header-bg-image element
+                var borderHeight = $('.header-bg-image').height();
+
+                // Convert 6rem to pixels for calculations
+                var remToPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
+                var additionalHeight = 5 * remToPx;
+
+                // Set the height of #welcome-body, subtracting the border height and adding 6rem
+                $('#welcome-body').css('height', 'calc(100vh - ' + (borderHeight + additionalHeight) + 'px)');
+            } else {
+                // Reset the height if the screen width is above 600px
+                $('#welcome-body').css('height', '');
+            }
+        }
+
+        // Run the function on page load
+        adjustWelcomeBodyHeight();
+
+        // Run the function on window resize
+        $(window).resize(function() {
+            adjustWelcomeBodyHeight();
+        });
+    });
+</script>
+@endpush
+
+
 @section('page-minicup')
-    <div class="bg-mhx-blue">
+
+    <div id="welcome-body" class="container py-sm-4 my-sm-4 py-4 my-4 d-sm-block d-flex justify-content-center align-items-center">
         <div>
-            <div class="container p-sm-5 p-3">
-                <div class="row g-0 align-items-center position-relative">
-                    <div class="col-md-5 col-12 z-9">
-                        <img src="{{ asset('assets/images/mini-4wd/mini-4wd-mhxcup-round@4x.png') }}" alt="" class="img-fluid d-block mx-auto">
-                    </div>
-                    <div id="event-tentative" class="col-md-7 col-12 z-9">
-                        <div class="p-sm-3 px-1 pt-3 pb-3">
-                            <div class="py-sm-3 px-sm-4 py-3 px-3 rounded-pill mb-3 bg-mhx-red text-sm-start text-center">
-                                <h3 class="text-white text-uppercase font-weight-700 my-0">Main Event Tentative</h3>
-                            </div>
-                            <div class="">
-                                <ul class="text-uppercase">
-                                    <li>
-                                        <h3 class="font-weight-700 mb-0 text-mhx-blue">Race Venue</h3>
-                                        <h3 class="font-weight-700 mb-3">MAEPS Serdang Hall B</h3>
-                                    </li>
-                                    <li>
-                                        <h3 class="font-weight-700 mb-0 text-mhx-blue">Race Date</h3>
-                                        <h3 class="font-weight-700 mb-3">2nd & 3rd December 2023</h3>
-                                    </li>
-                                    <li>
-                                        <h3 class="font-weight-700 mb-0 text-mhx-blue">Race Time</h3>
-                                        <h3 class="font-weight-700 mb-3">10:00 AM to 10:00 PM</h3>
-                                    </li>
-                                </ul>
-                                {{--<h4 class="text-sm-start text-center mb-0 text-uppercase font-weight-700 text-mhx-red px-3">Track Layout, Race Rules, Fees Will Be Release Soon!</h4>--}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="extra-box"></div>
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-5">
+                    <img src="{{ asset('assets/images/maha/maha-2024-image-slice-03.png') }}" alt="" class="img-fluid">
                 </div>
             </div>
-        </div>
-
-        <div class="container pt-sm-0 pb-sm-5 pt-4 pb-2">
-            <div class="row">
-                <div class="col-md-5 mx-auto">
-                    <a href="{{ route('register-form') }}">
-                        <div class="py-sm-4 px-sm-4 py-3 px-3 rounded-pill mb-3 bg-mhx-red text-sm-center text-center shine shadow-lg">
-                            <h3 class="text-white text-uppercase font-weight-700 my-0">Join The Race !!!</h3>
-                        </div>
-                    </a>
+            <div class="row justify-content-center maha100th-logo" {{--style="background-image:url({{ asset('assets/images/maha/maha-2024-image-slice-04.png') }}); background-repeat: no-repeat; background-size: 100% auto; "--}}>
+                <div class="col-md-12 col-12 py-sm-3 my-sm-3 py-3 my-3">
+                    <img src="{{ asset('assets/images/maha/maha-2024-image-slice-02.png') }}" alt="" class="img-fluid mx-auto d-block maha100th-logo-img">
+                    <h1 class="text-black text-center fw-800">Belanja sekarang di MAHA2024 dan berpeluang memenangi hadiah istimewa!</h1>
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="container px-sm-5 py-sm-3 py-3">
-                <div class="row">
-                    <div class="col-md-12 col-12 p-sm-5 py-4 bg-mhx-orange rounded-5 shadow-lg">
-                        <img src="{{ asset('assets/images/mini-4wd/prize-pool@4x.png') }}" alt="" class="img-fluid d-block mx-auto mb-4">
-
-                        <div class="card-group">
-                            <div class="card border-0 bg-mhx-orange">
-                                <div class="card-body text-center">
-                                    <h3 class="bg-mhx-red text-white card-title py-10px rounded-pill font-weight-700 mb-4">SEMI-TECH</h3>
-                                    <h5 class="mb-4"> <strong>CHAMPION</strong> <br> <strong class="text-mhx-blue font-weight-700">RM10,000 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"> <strong>1ST RUNNER UP</strong> <br> <strong class="text-mhx-blue font-weight-700">RM4,000 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"> <strong>2ND RUNNER UP</strong> <br> <strong class="text-mhx-blue font-weight-700">RM2,000 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"> <strong>NO. 4 - 6</strong> <br> <strong class="text-mhx-blue font-weight-700">RM1,000 + MHXM4WD MEDAL</strong></h5>
-                                    <h5 class=""> <strong>NO. 7 - 9</strong> <br> <strong class="text-mhx-blue font-weight-700">RM500 + MHXM4WD MEDAL</strong></h5>
-                                </div>
-                            </div>
-                            <div class="card border-0 bg-mhx-orange">
-                                <div class="card-body text-center">
-                                    <h3 class="bg-mhx-red text-white card-title py-10px rounded-pill font-weight-700 mb-4">B-MAX</h3>
-                                    <h5 class="mb-4"><strong>CHAMPION</strong> <br> <strong class="text-mhx-blue font-weight-700">RM3,000 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"><strong>1ST RUNNER UP</strong> <br> <strong class="text-mhx-blue font-weight-700">RM1,500 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"><strong>2ND RUNNER UP</strong> <br> <strong class="text-mhx-blue font-weight-700">RM800 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"><strong>NO. 4 - 6</strong> <br> <strong class="text-mhx-blue font-weight-700">RM400 + MHXM4WD MEDAL</strong></h5>
-                                    <h5 class=""><strong>NO. 7 - 9</strong> <br> <strong class="text-mhx-blue font-weight-700">RM200 + MHXM4WD MEDAL</strong></h5>
-                                </div>
-                            </div>
-                            <div class="card border-0 bg-mhx-orange">
-                                <div class="card-body text-center">
-                                    <h3 class="bg-mhx-red text-white card-title py-10px rounded-pill font-weight-700 mb-4">STOCK-CAR</h3>
-                                    <h5 class="mb-4"><strong>CHAMPION</strong> <br> <strong class="text-mhx-blue font-weight-700">RM1,000 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"><strong>1ST RUNNER UP</strong> <br> <strong class="text-mhx-blue font-weight-700">RM500 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"><strong>2ND RUNNER UP</strong> <br> <strong class="text-mhx-blue font-weight-700">RM250 + MHXM4WD CUP</strong></h5>
-                                    <h5 class="mb-4"><strong>NO. 4 - 6</strong> <br> <strong class="text-mhx-blue font-weight-700">RM150 + MHXM4WD MEDAL</strong></h5>
-                                    <h5 class=""><strong>NO. 7 - 9</strong> <br> <strong class="text-mhx-blue font-weight-700">RM100 + MHXM4WD</strong></h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row justify-content-center">
+                <div class="col-md-9 col-12 py-sm-3 my-sm-3 py-2 my-2">
+                    <img src="{{ asset('assets/images/maha/maha-2024-image-slice-01.png') }}" alt="" class="img-fluid">
                 </div>
             </div>
-        </div>
-
-        <div>
-            <div class="container pt-sm-5 pb-sm-2 pt-4 px-5">
-                <div class="row g-5">
-                    <div class="col-md-6">
-                        <img src="{{ asset('assets/images/rule_battery_allowed.jpeg') }}" alt="" class="img-fluid mx-auto img-thumbnail">
-                    </div>
-                    <div class="col-md-6">
-                        <img src="{{ asset('assets/images/rule_motor_allowed.jpeg') }}" alt="" class="img-fluid mx-auto img-thumbnail">
-                    </div>
-                </div>
-            </div>
-            <div class="container p-sm-5">
-                <img src="{{ asset('assets/images/mini-4wd/race-with-passion!@4x.png') }}" alt="" class="img-fluid pt-sm-0 pb-sm-0 pt-4 pb-4">
-            </div>
-        </div>
-
-        <div>
-            <div class="container px-sm-5 pt-sm-3 pb-sm-5 py-3">
-                <div class="row">
-                    <div class="col-md-12 col-12 p-sm-5 py-4 bg-mhx-orange rounded-5 shadow-lg">
-                        <h1 class="text-center font-weight-700 mb-4">EVENT TENTATIVE</h1>
-                        <div class="card-group">
-                            <div class="card border-0 bg-mhx-orange">
-                                <div class="card-body text-center">
-                                    <h3 class="bg-mhx-red text-white card-title py-10px rounded-pill font-weight-700 mb-4">SEMI-TECH</h3>
-                                    <h4 class="font-weight-700 text-uppercase mb-0 text-mhx-red">race day</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0 text-mhx-red">Sunday</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3 text-mhx-red">3rd December 2023</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">free practice</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3">8.30am - 10.00am</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">rumble session</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3">10.00am - 2.00pm</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">round 1 to final</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">2.30pm - 10.00pm</h4>
-                                </div>
-                            </div>
-                            <div class="card border-0 bg-mhx-orange">
-                                <div class="card-body text-center">
-                                    <h3 class="bg-mhx-red text-white card-title py-10px rounded-pill font-weight-700 mb-4">B-MAX</h3>
-                                    <h4 class="font-weight-700 text-uppercase mb-0 text-mhx-red">race day</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0 text-mhx-red">Saturday</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3 text-mhx-red">2nd December 2023</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">free practice</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3">8.30am - 10.00am</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">rumble session</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3">10.00am - 2.00pm</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">round 1 to final</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3">2.30pm - 10.00pm</h4>
-                                </div>
-                            </div>
-                            <div class="card border-0 bg-mhx-orange">
-                                <div class="card-body text-center">
-                                    <h3 class="bg-mhx-red text-white card-title py-10px rounded-pill font-weight-700 mb-4">STOCK-CAR</h3>
-                                    <h4 class="font-weight-700 text-uppercase mb-0 text-mhx-red">race day</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0 text-mhx-red">Sunday</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3 text-mhx-red">3rd December 2023</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">free practice</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3">8.30am - 10.00am</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-0">round 1 to final</h4>
-                                    <h4 class="font-weight-700 text-uppercase mb-3">10.00am - 10.00pm</h4>
-                                    <h5 class="font-weight-700 text-uppercase text-mhx-red"><i>only open to racer 15 years old and below</i></h5>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+            <div class="row justify-content-center">
+                <div class="col-md-12 py-sm-3 my-sm-3 py-3 my-3 text-center">
+                    <a href="{{ route('maha.register-form') . '?zone=web-site' }}" class="btn button-xxl px-5 btn-maha-green">Teruskan</a>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
 
-@push('onpagescript')
-    <script>
-        function setExtraBoxSize() {
-            var bxwidth = $('#event-tentative').width();
-            var bxheight = $('#event-tentative').height();
-
-            $('.extra-box').css({
-                'width': bxwidth,
-                'height': bxheight,
-            });
-        }
-
-        // Call the function on page load
-        $(document).ready(function() {
-            setExtraBoxSize();
-        });
-
-        // Call the function on window resize
-        $(window).resize(function() {
-            setExtraBoxSize();
-        });
-    </script>
-@endpush
