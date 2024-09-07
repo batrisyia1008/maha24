@@ -31,7 +31,7 @@ class MahaController extends Controller
             'email'                     => 'nullable|email',
             'know_platform'             => 'required|array',
             'know_platform.*'           => 'string',
-            'resits.*'                  => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'resits.*'                  => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2560',
             'receipt_amounts.*'         => 'nullable|numeric',
             'total'                     => 'required|numeric'
         ]);
