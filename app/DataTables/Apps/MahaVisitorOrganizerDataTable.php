@@ -30,7 +30,11 @@ class MahaVisitorOrganizerDataTable extends DataTable
             ->addColumn('created_date', function ($item) {
                 return $item->created_at->format('d-M-Y, h:i A');
             })
-            ->rawColumns(['created_date', 'action'])
+            ->addColumn('formatted_name', function ($item) {
+                $lastSixDigits = substr($item->ic_number, -6);
+                return $item->name . ' (' . $lastSixDigits . ')';
+            })
+            ->rawColumns(['created_date', 'action', 'formatted_name'])
             ->setRowId('id')
             ->addIndexColumn();
     }
@@ -78,6 +82,7 @@ class MahaVisitorOrganizerDataTable extends DataTable
             Column::make('phone'),
             Column::make('ic_number'),
             Column::make('total'),
+            Column::make('formatted_name')->title('Name (Last 6 Digits)'),
             Column::computed('created_date')
                     ->width('15%'),
             Column::computed('action')
