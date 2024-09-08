@@ -3,7 +3,6 @@
 namespace App\DataTables\Apps;
 
 use App\Models\Apps\Visitor;
-use App\Models\MahaVisitorOrganizer;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
