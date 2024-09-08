@@ -66,37 +66,37 @@
                             <div class="mb-0">
                                 <label for="nickname" class="form-label">Bagaimanakah anda mengetahui tentang acara ini?<span class="text-danger">*</span></label>
 
-                                <div class="form-check form-switch">
+                                <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="social_media" value="social_media" name="know_platform[]">
                                     <label class="form-check-label" for="social_media">Media Sosial (Facebook, X, Instagram, etc.)</label>
                                 </div>
 
-                                <div class="form-check form-switch">
+                                <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="emails" value="emails" name="know_platform[]">
                                     <label class="form-check-label" for="emails">Email dan Surat Khabar</label>
                                 </div>
 
-                                <div class="form-check form-switch">
+                                <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="events_calendar" value="events_calendar" name="know_platform[]">
                                     <label class="form-check-label" for="events_calendar">Kalendar Acara (Dalam Talian atau Fizikal)</label>
                                 </div>
 
-                                <div class="form-check form-switch">
+                                <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="advertisements" value="advertisements" name="know_platform[]">
                                     <label class="form-check-label" for="advertisements">Iklan (Dalam Talian atau Luar Talian)</label>
                                 </div>
 
-                                <div class="form-check form-switch">
+                                <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="celebrity" value="celebrity" name="know_platform[]">
                                     <label class="form-check-label" for="celebrity">Sokongan Selebriti atau Pempengaruh</label>
                                 </div>
 
-                                <div class="form-check form-switch">
+                                <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="books" value="books" name="know_platform[]">
                                     <label class="form-check-label" for="books">Buku atau Artikel</label>
                                 </div>
 
-                                <div class="form-check form-switch">
+                                <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="friend" value="friend" name="know_platform[]">
                                     <label class="form-check-label" for="friend">Rakan, Keluarga atau Rakan Sekerja</label>
                                 </div>
@@ -141,7 +141,7 @@
                             <hr class="my-10px">
 
                             <div class="mb-3">
-                                <label for="total_cost" class="form-label mb-1">Jumlah Pembelian</label>
+                                <label for="total_cost" class="form-label mb-1">Jumlah Pembelian <span class="text-danger">*</span></label>
                                 <input type="text" inputmode="numeric" name="total" value="" class="form-control mb-3">
                             </div>
 
