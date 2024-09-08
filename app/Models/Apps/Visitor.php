@@ -38,7 +38,7 @@ class Visitor extends Model
         return $this-> belongsTo(Zone::class);
     }
 
-    public function resits()
+    public function receipts()
     {
         return $this->hasMany(VisitorReceipt::class);
     }

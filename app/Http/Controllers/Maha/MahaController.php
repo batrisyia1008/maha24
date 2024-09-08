@@ -7,6 +7,7 @@ use App\Models\Apps\Zone;
 use App\Models\Apps\Visitor;
 use App\Models\Apps\VisitorReceipt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MahaController extends Controller
@@ -62,10 +63,15 @@ class MahaController extends Controller
         if ($request->hasFile('resits')) {
             foreach ($request->file('resits') as $index => $file) {
                 if ($file->isValid()) {
-                    $path = $file->store('receipts');
+                    $extension = $file->getClientOriginalExtension();
+                    $randomString = Str::random(6);
+                    $filename = now()->format('YmdHis') . '_' . $randomString . '.' . $extension;
+                    $file->move(public_path('assets/upload/receipts'), $filename);
+                    $filePath = 'assets/upload/receipts/' . $filename;
+
                     VisitorReceipt::create([
                         'visitor_id' => $visitor->id,
-                        'receipt' => $path,
+                        'receipt' => $filePath,
                         'amount' => $request->input('receipt_amounts.' . $index, 0)
                     ]);
                 }

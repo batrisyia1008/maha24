@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Apps\MahaOrganizerController;
+use App\Http\Controllers\Apps\MahaVisitorOrganizerController;
 use App\Http\Controllers\Maha\MahaController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MahaController::class, 'welcome'])->name('maha.welcome');
 Route::get('register-form', [MahaController::class, 'register'])->name('maha.register-form');
 Route::post('register', [MahaController::class, 'registerPost'])->name('maha.register');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('home', [MahaOrganizerController::class, 'home'])->name('maha.home');
+    Route::resource('visitor', MahaVisitorOrganizerController::class);
+});
