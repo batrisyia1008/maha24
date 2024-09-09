@@ -65,7 +65,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Berasal <span class="text-danger">*</span></label>
-                                <select name="states" id="" class="form-control select2">
+                                <select name="state" id="" class="form-control select2">
                                     <option value="">{{ __('Pilih') }}</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state }}">{{ $state }}</option>
