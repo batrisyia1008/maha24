@@ -171,13 +171,13 @@ $(document).ready(function() {
                                     <label for="email" class="form-label">Jantina <span class="text-danger">*</span></label>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 col-4">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="gender" id="lelaki" value="lelaki">
                                             <label class="form-check-label" for="lelaki">Lelaki</label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 col-4">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="gender" id="wanita" value="wanita">
                                             <label class="form-check-label" for="wanita">Wanita</label>

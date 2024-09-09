@@ -20,6 +20,8 @@ class Visitor extends Model
         'know_platform',
         'qr_code',
         'total',
+        'state',
+        'gender',
     ];
 
     public static function boot()
