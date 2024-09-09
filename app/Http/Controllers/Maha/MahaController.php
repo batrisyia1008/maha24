@@ -66,12 +66,12 @@ class MahaController extends Controller
 
         $visitor = Visitor::create([
             'zone_id'       => $request->input('zone'),
-            'name'          => $request->input('full_name'),
+            'name'          => strtoupper($request->input('full_name')),
             'ic_number'     => $cleanIcNumber,
             'phone'         => $cleanPhoneNumber,
             'email'         => $request->input('email'),
             'state'         => $request->input('state'),
-            'gender'         => $request->input('gender'),
+            'gender'        => $request->input('gender'),
             'know_platform' => json_encode($request->input('know_platform')),
             'total'         => $request->input('total'),
         ]);
