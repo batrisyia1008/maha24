@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use NunoMaduro\Collision\Adapters\Phpunit\State;
+use RealRashid\SweetAlert\Facades\Alert;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MahaController extends Controller
@@ -114,6 +115,7 @@ class MahaController extends Controller
         }
 
         Session::forget('zoneData');
+        Alert::success('Berjaya Dihantar', 'Sila hantar di tapak ROTF untuk mengetahui keputusan cabutan');
         return response()->view('maha.qr', [
             'data' => $visitor
         ]);
