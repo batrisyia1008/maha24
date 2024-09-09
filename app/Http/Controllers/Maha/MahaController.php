@@ -29,6 +29,10 @@ class MahaController extends Controller
 
     public function register(){
         $data     = Session::get('zoneData');
+        if (is_null($data)) {
+            $data = Zone::where('slug', 'web-site')->first();
+            Session::put('zoneData', $data);
+        }
         $response = Http::get(route('maha.state'));
         $states   = $response->json();
         return response()->view('maha.register', [
@@ -40,7 +44,12 @@ class MahaController extends Controller
     public function registerPost(Request $request){
         $validated = $request->validate([
             'full_name'                 => 'required|string|max:255',
-            'identification_card_number' => 'required|string|max:255',
+            'identification_card_number' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:visitors,ic_number'
+            ],
             'phone_number'              => 'required|string|max:255',
             'email'                     => 'required|email',
             'state'                     => 'required',
