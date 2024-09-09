@@ -186,11 +186,11 @@ class ZoneSeeder extends Seeder
             $uniq           = 'MAHA24_ZONE_' . strtoupper($num_str) . '_' . $zoneName;
             $qrcodeFilePath = public_path('assets/qrcode/' . $uniq . '.png');
 
-            $urlGenerate    = URL::to('?zone=' . $zoneName);
-            // $urlGenerate    = 'https://uat.maha2024.online/?zone=' . $zoneName;
+            // $urlGenerate    = URL::to('?zone=' . $zoneName);
+            $urlGenerate    = 'https://maha2024.online/?zone=' . $zoneName;
 
-            QrCode::size(500)->format('png')->generate($urlGenerate, $qrcodeFilePath);
-            $filePath = 'assets/qrcode/' . $uniq . '.png';
+            // QrCode::size(500)->format('png')->generate($urlGenerate, $qrcodeFilePath);
+            // $filePath = 'assets/qrcode/' . $uniq . '.png';
 
             Zone::create([
                 'uniq'        => $uniq,
