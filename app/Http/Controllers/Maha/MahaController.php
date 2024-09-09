@@ -7,8 +7,10 @@ use App\Models\Apps\Zone;
 use App\Models\Apps\Visitor;
 use App\Models\Apps\VisitorReceipt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MahaController extends Controller
@@ -26,9 +28,12 @@ class MahaController extends Controller
     }
 
     public function register(){
-        $data = Session::get('zoneData');
+        $data     = Session::get('zoneData');
+        $response = Http::get(route('maha.state'));
+        $states   = $response->json();
         return response()->view('maha.register', [
-            'zone' => $data
+            'zone'   => $data,
+            'states' => $states
         ]);
     }
 
@@ -89,6 +94,28 @@ class MahaController extends Controller
         Session::forget('zoneData');
         return response()->view('maha.qr', [
             'data' => $visitor
+        ]);
+    }
+
+    public function state()
+    {
+        return response()->json([
+            'Johor',
+            'Kedah',
+            'Kelantan',
+            'Melaka',
+            'Negeri Sembilan',
+            'Pahang',
+            'Perak',
+            'Perlis',
+            'Pulau Pinang',
+            'Sarawak',
+            'Selangor',
+            'Terengganu',
+            'Kuala Lumpur',
+            'Labuan',
+            'Sabah',
+            'Putrajaya',
         ]);
     }
 }

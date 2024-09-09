@@ -63,6 +63,37 @@
                                 <div class="invalid-feedback"></div>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Berasal <span class="text-danger">*</span></label>
+                                <select name="states" id="" class="form-control select2">
+                                    <option value="">{{ __('Pilih') }}</option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state }}">{{ $state }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="block">
+                                    <label for="email" class="form-label">Jantina <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="gender" id="lelaki" value="lelaki">
+                                            <label class="form-check-label" for="lelaki">Lelaki</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="gender" id="wanita" value="wanita">
+                                            <label class="form-check-label" for="wanita">Wanita</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="mb-0">
                                 <label for="nickname" class="form-label">Bagaimanakah anda mengetahui tentang acara ini?<span class="text-danger">*</span></label>
 
