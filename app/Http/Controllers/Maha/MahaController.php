@@ -21,7 +21,7 @@ class MahaController extends Controller
             Session::put('zoneData', $data);
             return response()->view('maha.welcome');
         } else {
-            return redirect()->route('maha.welcome');
+            return response()->view('maha.welcome');
         }
     }
 
