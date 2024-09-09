@@ -14,6 +14,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  console.log('test')
     // Get gender data from the controller
     var stateData = @json($statesdata);
 
@@ -108,7 +109,5 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
   </div>
   <!-- /Bar Charts -->
-
-
 
 @endsection

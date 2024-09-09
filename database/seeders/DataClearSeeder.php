@@ -30,14 +30,36 @@ class DataClearSeeder extends Seeder
         // Fetch all zones from the database
         $zones = Zone::all()->pluck('id', 'slug')->toArray();
 
+        $state = [
+            'Johor',
+            'Kedah',
+            'Kelantan',
+            'Melaka',
+            'Negeri Sembilan',
+            'Pahang',
+            'Perak',
+            'Perlis',
+            'Pulau Pinang',
+            'Sarawak',
+            'Selangor',
+            'Terengganu',
+            'Kuala Lumpur',
+            'Labuan',
+            'Sabah',
+            'Putrajaya',
+        ];
+
         for ($i = 0; $i < 1000; $i++) {
             // Pick a random zone slug
             $zoneSlug = array_rand($zones);
             $zoneId = $zones[$zoneSlug];
+            $randomState = $state[array_rand($state)];
 
             // Generate clean values for ic_number and phone
             $cleanIcNumber = $faker->numerify('##########');
             $cleanPhoneNumber = $faker->numerify('##########');
+
+            $randomCreatedAt = $faker->dateTimeBetween('2024-09-01', '2024-09-08');
 
             // Create a visitor
             $visitor = Visitor::create([
@@ -48,11 +70,13 @@ class DataClearSeeder extends Seeder
                 'email'         => $faker->safeEmail,
                 'know_platform' => json_encode([$faker->word, $faker->word]),
                 'total'         => $faker->numberBetween(1, 1000),
+                'state'         => $randomState,
+                'created_at'    => $randomCreatedAt,
             ]);
 
             // Generate QR code
             $qrcodeFilePath = public_path('assets/qrcode/' . $visitor->uniq . '.png');
-            QrCode::size(500)->format('png')->generate($visitor->uniq, $qrcodeFilePath);
+            // QrCode::size(500)->format('png')->generate($visitor->uniq, $qrcodeFilePath);
             $filePath = 'assets/qrcode/' . $visitor->uniq . '.png';
 
             // Update visitor with QR code path
