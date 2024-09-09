@@ -115,7 +115,7 @@ class MahaController extends Controller
         }
 
         Session::forget('zoneData');
-        Alert::success('Berjaya Dihantar', 'Sila hantar di tapak ROTF untuk mengetahui keputusan cabutan');
+        Alert::success('Berjaya Dihantar', 'Sila hadir di tapak ROTF untuk mengetahui keputusan cabutan');
         return response()->view('maha.qr', [
             'data' => $visitor
         ]);
