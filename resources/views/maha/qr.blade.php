@@ -106,7 +106,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-10 py-4 my-4 text-center">
-                    <h5 class="text-white fw-700 mb-5">Please make sure to screenshot and save to your mobile phone gallery.</h5>
+                    <h5 class="text-white fw-700 mb-5">Sila tangkap layar / muat turun kod dan simpan di galeri telefon anda.</h5>
                     <a href="" id="download" class="btn button-xxl px-5 btn-maha-green">Muat Turun</a>
                 </div>
             </div>

@@ -18,7 +18,7 @@ class Menu
                         'permission' => 'user-access',
                         'url'        => route('maha.home'),
                         'active_on'  => 'home*',
-                        'icon'       => 'tf-icons ti ti-users',
+                        'icon'       => 'tf-icons ti ti-dashboard',
                         'text'       => __('Dashboard'),
                         'target'     => '',
                     ],
@@ -30,14 +30,14 @@ class Menu
                         'text'       => __('Visitor'),
                         'target'     => '',
                     ],
-                    [
+                    /*[
                         'permission' => 'user-access',
                         'url'        => null,
                         'active_on'  => 'lucky-draw-list*',
                         'icon'       => 'tf-icons ti ti-users',
                         'text'       => __('Lucky Draw List'),
                         'target'     => '',
-                    ],
+                    ],*/
                     [
                         'permission' => 'user-access',
                         'url'        => route('maha.lucky.draw'),
