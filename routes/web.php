@@ -21,6 +21,7 @@ Route::get('register-form', [MahaController::class, 'register'])->name('maha.reg
 Route::post('register', [MahaController::class, 'registerPost'])->name('maha.register');
 
 Route::get('states', [MahaController::class, 'state'])->name('maha.state');
+Route::post('check-ic-number', [MahaController::class, 'checkIcNumber'])->name('check.ic_number');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('home', [MahaOrganizerController::class, 'home'])->name('maha.home');
