@@ -83,7 +83,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-12 py-sm-3 my-sm-3 py-3 my-3 text-center">
-                    <a href="{{ route('maha.register-form') . '?zone=web-site' }}" class="btn button-xxl px-5 btn-maha-green">Teruskan</a>
+                    <a href="{{ route('maha.register-form') }}" class="btn button-xxl px-5 btn-maha-green">Teruskan</a>
                 </div>
             </div>
         </div>
