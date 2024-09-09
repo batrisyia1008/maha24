@@ -14,8 +14,100 @@
 @endpush
 
 @push('onpagescript')
-    <script>
-    </script>
+<script>
+$(document).ready(function() {
+    $("#visitor-register").validate({
+        rules: {
+            full_name: {
+                required: true,
+                maxlength: 255
+            },
+            identification_card_number: {
+                required: true,
+                maxlength: 255,
+                remote: {
+                    url: "{{ route('check.ic_number') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        identification_card_number: function() {
+                            return $("#visitor-register input[name='identification_card_number']").val();
+                        }
+                    }
+                }
+            },
+            phone_number: {
+                required: true,
+                maxlength: 255
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            state: {
+                required: true
+            },
+            gender: {
+                required: true
+            },
+            "know_platform[]": {
+                required: true
+            },
+            "resits[]": {
+                required: true,
+                minlength: 1
+            },
+            total: {
+                required: true,
+                number: true
+            }
+        },
+        messages: {
+            full_name: "Nama Penuh diperlukan.",
+            identification_card_number: {
+                required: "Nombor Kad Pengenalan diperlukan.",
+                remote: "Nombor Kad Pengenalan sudah digunakan."
+            },
+            phone_number: "Nombor Telefon diperlukan.",
+            email: "Alamat Email diperlukan.",
+            state: "Berasal diperlukan.",
+            gender: "Jantina diperlukan.",
+            "know_platform[]": "Sila pilih sekurang-kurangnya satu pilihan.",
+            "resits[]": "Sila muat naik sekurang-kurangnya satu resit.",
+            total: "Jumlah Pembelian diperlukan dan mesti dalam format angka."
+        },
+        errorPlacement: function(error, element) {
+            // Log the error message and target element
+            console.log("Appending error:", error.text());
+
+            if (element.attr("name") === "know_platform[]") {
+                /*console.log("Target element:", element.closest(".know_platform_container").find(".invalid-feedback"));*/
+                error.appendTo(element.closest(".know_platform_container").find(".invalid-feedback").addClass("d-block"));
+            } else if (element.attr("name") === "resits[]") {
+                /*console.log("Target element:", element.closest(".receipt_input_container").find(".invalid-feedback"));*/
+                error.appendTo(element.closest(".receipt_input_container").find(".invalid-feedback").addClass("d-block"));
+            } else if (element.is(":radio")) {
+                /*console.log("Target element:", element.closest(".row").find(".invalid-feedback").addClass("d-block"));*/
+                error.appendTo(element.closest(".row").find(".invalid-feedback").addClass("d-block"));
+            } else {
+                /*console.log("Target element:", element.siblings(".invalid-feedback").addClass("d-block"));*/
+                error.appendTo(element.siblings(".invalid-feedback").addClass("d-block"));
+            }
+        },
+        highlight: function(element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function(element) {
+            $(element).removeClass("is-invalid");
+        },
+        success: function(label, element) {
+            $(element).removeClass("is-invalid").addClass("is-valid");
+            $(element).siblings(".invalid-feedback").text('');
+        }
+    });
+});
+
+</script>
 @endpush
 
 @section('page-minicup')
@@ -29,7 +121,7 @@
 
         <div class="row">
             <div id="confirm" class="col-md-6 mx-auto">
-                <form action="{{ route('maha.register') }}" method="POST" id="racer_register" accept-charset="utf-8" enctype="multipart/form-data">
+                <form action="{{ route('maha.register') }}" method="POST" id="visitor-register" accept-charset="utf-8" enctype="multipart/form-data">
                     @csrf
                     <div class="card mb-4" id="section_a">
                         <div class="card-body">
@@ -91,11 +183,12 @@
                                             <label class="form-check-label" for="wanita">Wanita</label>
                                         </div>
                                     </div>
+                                    <div class="invalid-feedback"></div>
                                 </div>
                             </div>
 
-                            <div class="mb-0">
-                                <label for="nickname" class="form-label">Bagaimanakah anda mengetahui tentang acara ini?<span class="text-danger">*</span></label>
+                            <div class="mb-0 know_platform_container">
+                                <label for="know_platform" class="form-label">Bagaimanakah anda mengetahui tentang acara ini?<span class="text-danger">*</span></label>
 
                                 <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="social_media" value="social_media" name="know_platform[]">
@@ -131,6 +224,7 @@
                                     <input class="form-check-input" type="checkbox" id="friend" value="friend" name="know_platform[]">
                                     <label class="form-check-label" for="friend">Rakan, Keluarga atau Rakan Sekerja</label>
                                 </div>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -140,7 +234,7 @@
                             <h5 class="font-weight-700">Bahagian B - Muat Naik Resit</h5>
                             <hr class="my-10px">
 
-                            <div class="mb-0">
+                            <div class="mb-0 receipt_input_container">
                                 {{--<label for="registrationSlot" class="form-label">Muat Naik Resit Anda Disni</label>--}}
                                 <div class="input-group mb-3">
                                     <input type="file" class="form-control" id="inputGroupFile02" name="resits[]">
@@ -161,6 +255,7 @@
                                 <div class="input-group mb-0">
                                     <input type="file" class="form-control" id="inputGroupFile02" name="resits[]">
                                 </div>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -173,7 +268,8 @@
 
                             <div class="mb-3">
                                 <label for="total_cost" class="form-label mb-1">Jumlah Pembelian <span class="text-danger">*</span></label>
-                                <input type="text" inputmode="numeric" name="total" value="" class="form-control mb-3">
+                                <input type="text" inputmode="numeric" name="total" value="" class="form-control" value="{{ old('total') }}">
+                                <div class="invalid-feedback"></div>
                             </div>
 
                             <div class="row justify-content-center">
