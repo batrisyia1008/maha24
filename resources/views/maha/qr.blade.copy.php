@@ -58,6 +58,10 @@
     </style>
 @endpush
 
+@push('onpagescript')
+
+@endpush
+
 @section('page-minicup')
     <div class="container col-lg-4 col-md-8 col-sm-4">
         <div class="mt-lg-3 pt-sm-3 mt-sm-5 pt-sm-5">
@@ -85,7 +89,3 @@
     </div>
 
 @endsection
-
-@push('onpagescript')
-
-@endpush

@@ -11,4 +11,9 @@ class MahaOrganizerController extends Controller
     {
         return view('apps.dashboard.index');
     }
+
+    public function luckyDraw()
+    {
+        return view('apps.lucky-draw.index');
+    }
 }
