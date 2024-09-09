@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('email');
+            $table->string('state')->nullable();
+            $table->string('gender')->nullable();
             $table->longText('know_platform')->nullable();
             $table->string('qr_code')->nullable();
             $table->decimal('total', 10, 2)->nullable();
