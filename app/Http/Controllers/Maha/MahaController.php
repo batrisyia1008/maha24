@@ -7,20 +7,28 @@ use App\Models\Apps\Zone;
 use App\Models\Apps\Visitor;
 use App\Models\Apps\VisitorReceipt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MahaController extends Controller
 {
-    public function welcome(){
-        return response()->view('maha.welcome');
+    public function welcome(Request $request)
+    {
+        if ($request->has('zone')) {
+            $zone = $request->query('zone');
+            $data = Zone::where('slug', $zone)->firstOrFail();
+            Session::put('zoneData', $data);
+            return response()->view('maha.welcome');
+        } else {
+            return response()->view('maha.welcome');
+        }
     }
 
-    public function register(Request $request){
-        $slug = $request->query('zone');
-        $zone = Zone::where('slug', $slug)->firstOrFail();
+    public function register(){
+        $data = Session::get('zoneData');
         return response()->view('maha.register', [
-            'zone' => $zone
+            'zone' => $data
         ]);
     }
 
@@ -78,6 +86,7 @@ class MahaController extends Controller
             }
         }
 
+        Session::forget('zoneData');
         return response()->view('maha.qr', [
             'data' => $visitor
         ]);

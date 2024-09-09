@@ -25,7 +25,7 @@ class DataClearSeeder extends Seeder
         VisitorReceipt::truncate();
         Schema::enableForeignKeyConstraints();
 
-        $faker = Faker::create();
+        /*$faker = Faker::create();
 
         // Fetch all zones from the database
         $zones = Zone::all()->pluck('id', 'slug')->toArray();
@@ -58,7 +58,7 @@ class DataClearSeeder extends Seeder
             // Update visitor with QR code path
             $visitor->update([
                 'qr_code' => $filePath
-            ]);
+            ]);*/
 
             // Create visitor receipts
             /*for ($j = 0; $j < 5; $j++) {
@@ -94,6 +94,6 @@ class DataClearSeeder extends Seeder
                     $this->command->error("Temporary file does not exist: $tempFile");
                 }
             }*/
-        }
+        /*}*/
     }
 }

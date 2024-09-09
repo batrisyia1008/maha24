@@ -23,4 +23,5 @@ Route::post('register', [MahaController::class, 'registerPost'])->name('maha.reg
 Route::group(['middleware' => 'auth'], function () {
     Route::get('home', [MahaOrganizerController::class, 'home'])->name('maha.home');
     Route::resource('visitor', MahaVisitorOrganizerController::class);
+    Route::get('lucky-draw', [MahaOrganizerController::class, 'luckyDraw'])->name('maha.lucky.draw');
 });
