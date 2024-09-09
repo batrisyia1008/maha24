@@ -28,7 +28,7 @@ class MahaOrganizerController extends Controller
             $lastSixDigits = substr($icNumber, -6);
 
             // Limit the name to a maximum of 30 characters and add ellipsis if needed
-            $maxNameLength = 35;
+            $maxNameLength = 30;
             $name = strlen($item->name) > $maxNameLength ? substr($item->name, 0, $maxNameLength) . '...' : $item->name;
 
             // Create the formatted name
