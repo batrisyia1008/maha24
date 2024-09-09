@@ -27,4 +27,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('home', [MahaOrganizerController::class, 'home'])->name('maha.home');
     Route::resource('visitor', MahaVisitorOrganizerController::class);
     Route::get('lucky-draw', [MahaOrganizerController::class, 'luckyDraw'])->name('maha.lucky.draw');
+    Route::get('lucky-draw-name', [MahaOrganizerController::class, 'luckyDrawName'])->name('maha.lucky.draw.name');
 });
