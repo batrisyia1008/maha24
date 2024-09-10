@@ -13,6 +13,7 @@
 
     <!-- Vendors JS -->
     <script src="{{ asset('apps/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('apps/vendor/libs/chartjs/chartjs.js') }}"></script>
     <script src="{{ asset('apps/vendor/libs/swiper/swiper.js') }}"></script>
     <script src="{{ asset('apps/vendor/libs/select2/select2.js') }}"></script>
     <script src="{{ asset('apps/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>

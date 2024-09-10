@@ -53,7 +53,7 @@ class MahaOrganizerController extends Controller
                 'Labuan' => Visitor::where('state', 'Labuan')->whereDate('created_at', '>=', $startDate)->count(),
                 'Sabah' => Visitor::where('state', 'Sabah')->whereDate('created_at', '>=', $startDate)->count(),
                 'Putrajaya' => Visitor::where('state', 'Putrajaya')->whereDate('created_at', '>=', $startDate)->count(),
-                    
+
             ];
         }
 
@@ -63,31 +63,10 @@ class MahaOrganizerController extends Controller
         ];
 
         $todayVisitorsCount = Visitor::whereDate('created_at', today())->count();
-
         $todaySpending = Visitor::whereDate('created_at', today())->sum('total');
-
-        // $zones = Zone::all(); // Fetch all zones
-
-        // $startDate = $request->input('start_date');
-        // $selectedZoneId = $request->input('zone_id');
-    
-        // // Query for visitors and spending based on the selected zone and date
-        // $query = Visitor::query();
-    
-        // if ($startDate) {
-        //     $query->whereDate('created_at', '=', $startDate);
-        // }
-    
-        // if ($selectedZoneId) {
-        //     $query->where('zone_id', $selectedZoneId);
-        // }
-    
-        // $visitorCount = $query->count();
-        // $totalSpending = $query->sum('total');
-       
         $overallVisitorsCount = Visitor::count();
-
         $overallSpending =  Visitor::sum('total');
+        $zones = Zone::all();
 
         return view('apps.dashboard.index', [
             'statesdata'            => $statesdata,
@@ -95,45 +74,11 @@ class MahaOrganizerController extends Controller
             'todayVisitorsCount'    => $todayVisitorsCount,
             'todaySpending'         => $todaySpending,
             'startDate'             => $startDate,
-            // 'zone'                  => $zones,
-            'overallVisitorsCount'   => $overallVisitorsCount,
+            'zones'                 => $zones,
+            'overallVisitorsCount'  => $overallVisitorsCount,
             'overallSpending'       => $overallSpending,
-
-
         ]);
     }
-
-    // public function getZoneData(Request $request)
-    // {
-
-    //     $zones = Zone::all(); // Fetch all zones
-
-    //     $startDate = $request->input('start_date');
-    //     $selectedZoneId = $request->input('zone_id');
-    
-    //     // Query for visitors and spending based on the selected zone and date
-    //     $query = Visitor::query();
-    
-    //     if ($startDate) {
-    //         $query->whereDate('created_at', '=', $startDate);
-    //     }
-    
-    //     if ($selectedZoneId) {
-    //         $query->where('zone_id', $selectedZoneId);
-    //     }
-    
-    //     $visitorCount = $query->count();
-    //     $totalSpending = $query->sum('total');
-    
-    //     return view('apps.dashboard.index', [
-    //         'zones' => $zones,
-    //         'visitorCount' => $visitorCount,
-    //         'totalSpending' => $totalSpending,
-    //         'selectedZoneId' => $selectedZoneId,
-    //         'startDate' => $startDate,
-    //     ]);
-
-    // }
 
     public function luckyDraw()
     {
@@ -142,61 +87,34 @@ class MahaOrganizerController extends Controller
 
     public function luckyDrawName()
     {
-        $visitors = Visitor::all(); // Fetch all visitors or apply any filters needed
+        $rotf     = Zone::where('name', 'RHYTHM OF THE FARMERS (ROTF)')->first();
+        $visitors = Visitor::where('zone_id', $rotf->id)->get();
 
         $transformedData = $visitors->map(function ($item) {
-            // Ensure the IC number has at least 6 digits
             $icNumber = str_pad($item->ic_number, 6, '0', STR_PAD_LEFT);
             $lastSixDigits = substr($icNumber, -6);
-
-            // Limit the name to a maximum of 30 characters and add ellipsis if needed
             $maxNameLength = 30;
             $name = strlen($item->name) > $maxNameLength ? substr($item->name, 0, $maxNameLength) . '...' : $item->name;
-
-            // Create the formatted name
             $item->formatted_name = $name . ' (' . $lastSixDigits . ')';
             return $item;
         });
-
-        // If you need to convert to an array or pass to a view
         $transformedArray = $transformedData->toArray();
 
         return response()->json($transformedArray);
     }
 
-    public function getZones()
-    {
-        // Fetch all available zones
-        $zones = Zone::all(); // Assuming you have a Zone model
-
-        // Return the list of zones as JSON
-        return response()->json($zones);
-    }
-
     public function dailySum(Request $request)
     {
-        // Fetch the selected zone and start date
-        $zoneId = $request->input('zone_id');
-        $startDate = $request->input('start_date');
+        $zone_id = $request->zone_id;
+        $date = $request->date;
 
-        // Query visitors for the selected zone
-        $visitorsQuery = Visitor::where('zone_id', $zoneId);
+        // Fetch total visitor count and total spending based on zone and date
+        $visitorCount = Visitor::where('zone_id', $zone_id)->whereDate('created_at', $date)->count();
+        $totalSpending = Visitor::where('zone_id', $zone_id)->whereDate('created_at', $date)->sum('total'); // Assuming 'total' is the spending column
 
-        // If a start date is provided, fetch visitors from that date onwards
-        if ($startDate) {
-            $visitorsQuery->where('created_at', '>=', $startDate);
-        }
-
-        // Get the total number of visitors
-        $totalVisitors = $visitorsQuery->count();
-
-        // Get the total spending for visitors from the selected zone and start date
-        $totalSpending = $visitorsQuery->sum('spending'); // Assuming 'spending' is a field in the Visitor model
-
-        // Return the total visitors and spending as a JSON response
         return response()->json([
-            'total_visitors' => $totalVisitors,
-            'total_spending' => $totalSpending,
+            'visitorCount' => $visitorCount,
+            'totalSpending' => $totalSpending
         ]);
     }
 }
