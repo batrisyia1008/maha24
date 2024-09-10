@@ -25,40 +25,67 @@ class DataClearSeeder extends Seeder
         VisitorReceipt::truncate();
         Schema::enableForeignKeyConstraints();
 
-        /*$faker = Faker::create();
+        $faker = Faker::create();
 
         // Fetch all zones from the database
         $zones = Zone::all()->pluck('id', 'slug')->toArray();
 
-        for ($i = 0; $i < 100; $i++) {
+        $state = [
+            'Johor',
+            'Kedah',
+            'Kelantan',
+            'Melaka',
+            'Negeri Sembilan',
+            'Pahang',
+            'Perak',
+            'Perlis',
+            'Pulau Pinang',
+            'Sarawak',
+            'Selangor',
+            'Terengganu',
+            'Kuala Lumpur',
+            'Labuan',
+            'Sabah',
+            'Putrajaya',
+        ];
+
+        for ($i = 0; $i < 1000; $i++) {
             // Pick a random zone slug
             $zoneSlug = array_rand($zones);
             $zoneId = $zones[$zoneSlug];
+            $randomState = $state[array_rand($state)];
 
             // Generate clean values for ic_number and phone
             $cleanIcNumber = $faker->numerify('##########');
             $cleanPhoneNumber = $faker->numerify('##########');
 
+            $randomCreatedAt = $faker->dateTimeBetween('2024-09-01', '2024-09-11');
+
+            $randomGender = $faker->randomElement(['male', 'female']);
+
             // Create a visitor
             $visitor = Visitor::create([
                 'zone_id'       => $zoneId,
-                'name'          => $faker->name,
+                'name'          => $faker->name($randomGender),
                 'ic_number'     => $cleanIcNumber,
                 'phone'         => $cleanPhoneNumber,
                 'email'         => $faker->safeEmail,
                 'know_platform' => json_encode([$faker->word, $faker->word]),
                 'total'         => $faker->numberBetween(1, 1000),
+                'state'         => $randomState,
+                'created_at'    => $randomCreatedAt,
+                'gender'        => $randomGender,
             ]);
 
             // Generate QR code
             $qrcodeFilePath = public_path('assets/qrcode/' . $visitor->uniq . '.png');
-            QrCode::size(500)->format('png')->generate($visitor->uniq, $qrcodeFilePath);
+            // QrCode::size(500)->format('png')->generate($visitor->uniq, $qrcodeFilePath);
             $filePath = 'assets/qrcode/' . $visitor->uniq . '.png';
 
             // Update visitor with QR code path
             $visitor->update([
                 'qr_code' => $filePath
-            ]);*/
+            ]);
 
             // Create visitor receipts
             /*for ($j = 0; $j < 5; $j++) {
@@ -94,6 +121,6 @@ class DataClearSeeder extends Seeder
                     $this->command->error("Temporary file does not exist: $tempFile");
                 }
             }*/
-        /*}*/
+        }
     }
 }
