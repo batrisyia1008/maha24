@@ -16,20 +16,28 @@ class Menu
                 'menus'      => [
                     [
                         'permission' => 'user-access',
+                        'url'        => route('maha.home'),
+                        'active_on'  => 'home*',
+                        'icon'       => 'tf-icons ti ti-dashboard',
+                        'text'       => __('Dashboard'),
+                        'target'     => '',
+                    ],
+                    [
+                        'permission' => 'user-access',
                         'url'        => route('visitor.index'),
                         'active_on'  => 'visitor*',
                         'icon'       => 'tf-icons ti ti-users',
                         'text'       => __('Visitor'),
                         'target'     => '',
                     ],
-                    [
+                    /*[
                         'permission' => 'user-access',
                         'url'        => null,
                         'active_on'  => 'lucky-draw-list*',
                         'icon'       => 'tf-icons ti ti-users',
                         'text'       => __('Lucky Draw List'),
                         'target'     => '',
-                    ],
+                    ],*/
                     [
                         'permission' => 'user-access',
                         'url'        => route('maha.lucky.draw'),

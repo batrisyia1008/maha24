@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use NunoMaduro\Collision\Adapters\Phpunit\State;
+use RealRashid\SweetAlert\Facades\Alert;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MahaController extends Controller
@@ -27,6 +28,13 @@ class MahaController extends Controller
         }
     }
 
+    public function checkIcNumber(Request $request)
+    {
+        $identificationCardNumber = preg_replace('/[^0-9]/', '', $request->input('identification_card_number'));
+        $exists = Visitor::where('ic_number', $identificationCardNumber)->exists();
+        return response()->json(!$exists);
+    }
+
     public function register(){
         $data     = Session::get('zoneData');
         if (is_null($data)) {
@@ -41,7 +49,8 @@ class MahaController extends Controller
         ]);
     }
 
-    public function registerPost(Request $request){
+    public function registerPost(Request $request)
+    {
         $validated = $request->validate([
             'full_name'                 => 'required|string|max:255',
             'identification_card_number' => [
@@ -56,6 +65,7 @@ class MahaController extends Controller
             'gender'                    => 'required',
             'know_platform'             => 'required|array',
             'know_platform.*'           => 'string',
+            'resits'                    => 'required_without_all:resits.*|array',
             'resits.*'                  => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:25000',
             'receipt_amounts.*'         => 'nullable|numeric',
             'total'                     => 'required|numeric'
@@ -105,6 +115,7 @@ class MahaController extends Controller
         }
 
         Session::forget('zoneData');
+        Alert::success('Berjaya Dihantar', 'Sila hadir di tapak ROTF untuk mengetahui keputusan cabutan');
         return response()->view('maha.qr', [
             'data' => $visitor
         ]);
