@@ -59,12 +59,14 @@ class DataClearSeeder extends Seeder
             $cleanIcNumber = $faker->numerify('##########');
             $cleanPhoneNumber = $faker->numerify('##########');
 
-            $randomCreatedAt = $faker->dateTimeBetween('2024-09-01', '2024-09-08');
+            $randomCreatedAt = $faker->dateTimeBetween('2024-09-01', '2024-09-11');
+
+            $randomGender = $faker->randomElement(['male', 'female']);
 
             // Create a visitor
             $visitor = Visitor::create([
                 'zone_id'       => $zoneId,
-                'name'          => $faker->name,
+                'name'          => $faker->name($randomGender),
                 'ic_number'     => $cleanIcNumber,
                 'phone'         => $cleanPhoneNumber,
                 'email'         => $faker->safeEmail,
@@ -72,6 +74,7 @@ class DataClearSeeder extends Seeder
                 'total'         => $faker->numberBetween(1, 1000),
                 'state'         => $randomState,
                 'created_at'    => $randomCreatedAt,
+                'gender'        => $randomGender,
             ]);
 
             // Generate QR code
