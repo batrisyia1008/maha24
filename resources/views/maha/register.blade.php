@@ -127,7 +127,7 @@ $(document).ready(function() {
                         <div class="card-body">
 
                             <h5 class="font-weight-700">Bahagian A - Maklumat Peserta</h5>
-                            <p class="mt-2"><strong><span class="text-danger">*</span>Bagi melayakan anda untuk menyertai cabutan bertuah ini anda perlu berbelanja RM 50 dan keatas dimana-mana lokasi di dalam MAHA 2024. Sila memuat naik reit anda di Bahagian C.</strong></p>
+                            <p class="mt-2"><strong><span class="text-danger">*</span>Bagi melayakan anda untuk menyertai cabutan bertuah ini anda perlu berbelanja RM 50 dan keatas dimana-mana lokasi di dalam MAHA 2024. Sila memuat naik resit anda di Bahagian C.</strong></p>
                             <hr class="my-10px">
 
                             <input type="hidden" name="zone" value="{{ $zone->id }}" class="form-control mb-3" readonly>
@@ -274,7 +274,7 @@ $(document).ready(function() {
 
                             </div>
 
-                            <p class="text-center">Dengan menekan butang Hantar,saya mengakui segala butiran adalah benar. </p>
+                            <p class="text-center">Dengan menekan butang <b>Hantar</b>, saya mengakui segala butiran adalah benar mengikut <b>Terma & Syarat</b>. </p>
 
                             <div class="row justify-content-center">
                                 <div class="col-md-6">
