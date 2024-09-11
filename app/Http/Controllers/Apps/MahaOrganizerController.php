@@ -124,7 +124,7 @@ class MahaOrganizerController extends Controller
         ]);
     }
 
-    public function getStateData(Request $request)
+      public function getStateData(Request $request)
     {
         $startDate = $request->input('start_date');
 
