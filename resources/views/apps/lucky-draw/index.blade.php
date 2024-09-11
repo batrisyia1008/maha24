@@ -122,7 +122,7 @@
                 let shuffledNames = shuffleArray(participantNames);
 
                 const startTime = Date.now();
-                const maxDuration = 10000; // 7 seconds in milliseconds
+                const maxDuration = 10000; // 10 seconds in milliseconds
                 let index = 0;
 
                 function updateDisplay() {
@@ -139,7 +139,7 @@
                         //     showConfirmButton: true,
                         //     timer: 3000
                         // }).then(() => {
-                            // Stop the sound after the Swal timer
+                        //     stopSound();
                         // });
                         return;
                     }
@@ -162,8 +162,7 @@
                         //     showConfirmButton: true,
                         //     timer: 3000
                         // }).then(() => {
-                            // Stop the sound after the Swal timer
-                            // stopSound();
+                        //     stopSound();
                         // });
                     }
                 }
@@ -174,9 +173,13 @@
             startShuffle.addEventListener('click', function(event) {
                 event.preventDefault();
                 display.innerHTML = ''; // Clear display initially
-                fetchNames().then(() => {
-                    startShuffling();
-                });
+
+                // Add a 5000-millisecond (5-second) delay before running fetchNames and startShuffling
+                setTimeout(() => {
+                    fetchNames().then(() => {
+                        startShuffling();
+                    });
+                }, 200); // 500 milliseconds delay
             });
 
             function shuffleArray(array) {
