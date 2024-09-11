@@ -103,8 +103,10 @@ class MahaVisitorOrganizerDataTable extends DataTable
             Column::make('phone'),
             Column::make('ic_number'),
             Column::make('total'),
-            Column::make('formatted_name')->title('Name (Last 6 Digits)'),
+            Column::make('formatted_name')->title('Name (Last 6 Digits)')
+                    ->exportable(false),
             Column::computed('created_date')
+                    ->exportable(false)
                     ->width('15%'),
             Column::computed('action')
                     ->exportable(false)
