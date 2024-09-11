@@ -16,6 +16,9 @@
             border-width: 3px;
             border-color: #FFFFFF;
         }
+        td, th{
+            text-align: center;
+        }
         @media only screen and (max-width: 600px) {
             body {
                 min-height: 100vh;
@@ -52,12 +55,12 @@
         }
 
         // Run the function on page load
-        adjustWelcomeBodyHeight();
+        // adjustWelcomeBodyHeight();
 
         // Run the function on window resize
-        $(window).resize(function() {
-            adjustWelcomeBodyHeight();
-        });
+        // $(window).resize(function() {
+        //     adjustWelcomeBodyHeight();
+        // });
     });
 </script>
 @endpush
@@ -81,6 +84,63 @@
             <div class="row justify-content-center">
                 <div class="col-md-9 col-12 py-sm-3 my-sm-3 py-2 my-2">
                     <img src="{{ asset('assets/images/maha/maha-2024-image-slice-01.png') }}" alt="" class="img-fluid">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-9 col-9 py-sm-3 my-sm-3 py-2 my-2">
+                <h2 class="text-center"><strong>Waktu Cabutan Bertuah</strong></h2>
+                <table class="table bg-white table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Tarikh</th>
+                        <th colspan="2">Masa</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Sesi 1</th>
+                        <th>Sesi 2</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Rabu<br>11/09/2024</td>
+                        <td></td>
+                        <td>09:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Khamis<br>12/09/2024</td>
+                        <td>03:30 PM</td>
+                        <td>09:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Jumaat<br>13/09/2024</td>
+                        <td>03:30 PM</td>
+                        <td>09:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Sabtu<br>14/09/2024</td>
+                        <td>03:30 PM</td>
+                        <td>09:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Ahad<br>15/09/2024</td>
+                        <td>03:30 PM</td>
+                        <td>09:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Isnin<br>16/09/2024</td>
+                        <td>03:30 PM</td>
+                        <td>09:30 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Selasa<br>17/09/2024</td>
+                        <td>03:30 PM</td>
+                        <td>09:30 PM</td>
+                    </tr>
+                    
+                    <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
                 </div>
             </div>
             <div class="row justify-content-center">
