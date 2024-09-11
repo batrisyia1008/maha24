@@ -17,7 +17,7 @@
     <script>
         $(document).ready(function() {
 
-            flatpickr("#datePicker", {
+            flatpickr("#statesQuery", {
                 dateFormat: "Y-m-d",
                 defaultDate: "{{ $startDate ?? '' }}", // Set the default date if available
                 onChange: function(selectedDates, dateStr, instance) {
@@ -75,43 +75,33 @@
                 }
             });
 
-            // Function to handle changes in zone and date
             function fetchDailySummaries() {
-                // Get the selected zone and date values
-                var selectedZone = $('#zoneSelect').val();
-                var selectedDate = $('#datePicker').val();
+                var selectedZone = $('#queryzoneSelect').val();
+                var selectedDate = $('#getSummariesbyDate').val();
 
-                // Ensure both fields are selected before making the request
-                if (selectedZone && selectedDate) {
-                    // Make the AJAX request to get the daily summaries
+                if (selectedZone || selectedDate) {
                     $.ajax({
                         url: "{{ route('maha.daily.summaries') }}",
                         method: "POST",
                         data: {
                             _token: "{{ csrf_token() }}",  // Include CSRF token
-                            zone_id: selectedZone,
-                            date: selectedDate
+                            zone_id: selectedZone ? selectedZone : null,  // If not selected, send null
+                            date: selectedDate ? selectedDate : null      // If not selected, send null
                         },
                         success: function (response) {
-                            // Update the visitor count and total spending in the UI
                             $('.jumlah-peserta').text(response.visitorCount);
                             $('.jumlah-perbelanjaan').text('RM ' + parseFloat(response.totalSpending).toFixed(2));
                         },
                         error: function (xhr) {
-                            // Handle any errors
                             console.error("An error occurred: " + xhr.status + " " + xhr.statusText);
                         }
                     });
                 }
             }
-
-            // Trigger the function when the zone is selected
-            $('#zoneSelect').change(function () {
+            $('#queryzoneSelect').change(function () {
                 fetchDailySummaries();
             });
-
-            // Trigger the function when the date is selected
-            $('#datePicker').change(function () {
+            $('#getSummariesbyDate').change(function () {
                 fetchDailySummaries();
             });
         });
@@ -126,9 +116,9 @@
             <div class="card h-100">
                 <div class="card-body pb-0">
                     <div class="card-icon">
-                            <span class="badge bg-label-primary rounded p-2">
-                                <i class='ti ti-users ti-26px'></i>
-                            </span>
+                        <span class="badge bg-label-primary rounded p-2">
+                            <i class='ti ti-users ti-26px'></i>
+                        </span>
                     </div>
                     <h5 class="card-title mb-0 mt-2">{{ number_format($overallVisitorsCount) }}</h5>
                     <small>Jumlah Keseluruhan Peserta</small>
@@ -193,7 +183,7 @@
                 <div class="card-header header-elements">
                     <h5 class="card-title mb-0">Keseluruhan Negeri</h5>
                     <div class="card-action-element ms-auto py-0">
-                        <input type="text" id="datePicker" class="form-control" placeholder="Select Date">
+                        <input type="text" id="statesQuery" class="form-control flatpickr-start" placeholder="Select Date">
                     </div>
                 </div>
                 <div class="card-body">
@@ -240,7 +230,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                            <select id="zoneSelect" class="select2 form-select form-select-lg" data-allow-clear="true">
+                            <select id="queryzoneSelect" class="select2 form-select form-select-lg" data-allow-clear="true">
                                 <option value="">Sila Pilih Zon</option>
                                 @foreach ($zones as $zone)
                                     <option value="{{ $zone->id }}">
@@ -251,7 +241,7 @@
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="card-action-element ms-auto py-0">
-                                <input type="text" id="datePicker" class="form-control" placeholder="Select Date">
+                                <input type="date" id="getSummariesbyDate" class="form-control flatpickr-end" placeholder="Select Date">
                             </div>
                         </div>
                     </div>
