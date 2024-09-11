@@ -85,18 +85,13 @@
             const soundEffect = document.getElementById('soundEffect');
             const routeUrl = "{{ route('maha.lucky.draw.name') }}";
             let participantNames = [];
-            let shuffleTimeout;
             let soundPlayed = false;
 
             function fetchNames() {
                 return $.get(routeUrl)
                     .done(function(data) {
                         participantNames = data.map(item => item.formatted_name);
-
-                        if (participantNames.length > 0) {
-                            const randomIndex = Math.floor(Math.random() * participantNames.length);
-                            display.innerHTML = participantNames[randomIndex];
-                        }
+                        display.innerHTML = ''; // Clear display initially
                     })
                     .fail(function() {
                         Swal.fire('Error', 'Failed to fetch names.', 'error');
@@ -124,43 +119,64 @@
                 startShuffle.setAttribute('disabled', true);
                 soundPlayed = false; // Reset sound flag for the new shuffle
 
-                fetchNames().then(() => {
-                    let shuffledNames = shuffleArray(participantNames);
-                    clearTimeout(shuffleTimeout);
+                let shuffledNames = shuffleArray(participantNames);
 
-                    const startTime = Date.now();
-                    const maxDuration = 7000; // 7 seconds in milliseconds
-                    let index = 0;
+                const startTime = Date.now();
+                const maxDuration = 10000; // 7 seconds in milliseconds
+                let index = 0;
 
-                    function updateDisplay() {
-                        if (Date.now() - startTime > maxDuration) {
-                            display.innerHTML = shuffledNames[0];
-                            playSound();
-                            startShuffle.removeAttribute('disabled');
-                            stopSound(); // Stop the sound after shuffle completes
-                            return;
-                        }
-
-                        if (index < shuffledNames.length) {
-                            let rand = Math.floor(Math.random() * shuffledNames.length);
-                            display.innerHTML = `<span class="scrolling-animation">${shuffledNames[rand]}</span>`;
-                            index++;
-                            setTimeout(updateDisplay, 100);
-                        } else {
-                            display.innerHTML = shuffledNames[0];
-                            playSound();
-                            startShuffle.removeAttribute('disabled');
-                            stopSound(); // Stop the sound after shuffle completes
-                        }
+                function updateDisplay() {
+                    if (Date.now() - startTime > maxDuration) {
+                        display.innerHTML = shuffledNames[0];
+                        playSound();
+                        startShuffle.removeAttribute('disabled');
+                        stopSound();
+                        // Swal.fire({
+                        //     position: 'center',
+                        //     icon: 'success',
+                        //     title: 'Congratulations',
+                        //     text: `'${shuffledNames[0]}'`,
+                        //     showConfirmButton: true,
+                        //     timer: 3000
+                        // }).then(() => {
+                            // Stop the sound after the Swal timer
+                        // });
+                        return;
                     }
 
-                    updateDisplay();
-                });
+                    if (index < shuffledNames.length) {
+                        let rand = Math.floor(Math.random() * shuffledNames.length);
+                        display.innerHTML = `<span class="scrolling-animation">${shuffledNames[rand]}</span>`;
+                        index++;
+                        setTimeout(updateDisplay, 100);
+                    } else {
+                        display.innerHTML = shuffledNames[0];
+                        playSound();
+                        startShuffle.removeAttribute('disabled');
+                        stopSound();
+                        // Swal.fire({
+                        //     position: 'center',
+                        //     icon: 'success',
+                        //     title: 'Congratulations',
+                        //     text: `'${shuffledNames[0]}'`,
+                        //     showConfirmButton: true,
+                        //     timer: 3000
+                        // }).then(() => {
+                            // Stop the sound after the Swal timer
+                            // stopSound();
+                        // });
+                    }
+                }
+
+                updateDisplay();
             }
 
             startShuffle.addEventListener('click', function(event) {
                 event.preventDefault();
-                startShuffling();
+                display.innerHTML = ''; // Clear display initially
+                fetchNames().then(() => {
+                    startShuffling();
+                });
             });
 
             function shuffleArray(array) {
@@ -172,7 +188,7 @@
                 return shuffledArr;
             }
 
-            fetchNames();
+            fetchNames(); // Load names and clear display initially
         });
     </script>
 @endpush
