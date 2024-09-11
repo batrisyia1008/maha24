@@ -13,6 +13,8 @@
         .button-xxl {
             padding: 1em;
             font-size: 1.25rem;
+            border-width: 3px;
+            border-color: #FFFFFF;
         }
         @media only screen and (max-width: 600px) {
             body {

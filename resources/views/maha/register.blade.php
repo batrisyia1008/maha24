@@ -127,6 +127,7 @@ $(document).ready(function() {
                         <div class="card-body">
 
                             <h5 class="font-weight-700">Bahagian A - Maklumat Peserta</h5>
+                            <p class="mt-2"><strong><span class="text-danger">*</span>Bagi melayakan anda untuk menyertai cabutan bertuah ini anda perlu berbelanja RM 50 dan keatas dimana-mana lokasi di dalam MAHA 2024. Sila memuat naik reit anda di Bahagian C.</strong></p>
                             <hr class="my-10px">
 
                             <input type="hidden" name="zone" value="{{ $zone->id }}" class="form-control mb-3" readonly>
@@ -229,9 +230,26 @@ $(document).ready(function() {
                         </div>
                     </div>
 
+                    <div class="card mb-4" id="payment">
+                        <div class="card-body">
+                            <h5 class="font-weight-700">Bahagian B - Jumlah Perbelanjaan</h5>
+                            <hr class="my-10px">
+
+                            <div class="mb-3">
+                                <label for="total_cost" class="form-label mb-1">Jumlah Perbelanjaan <span class="text-danger">*</span></label>
+                                <input type="text" inputmode="numeric" name="total" value="" class="form-control" value="{{ old('total') }}">
+                                <div class="invalid-feedback"></div>
+                                <p class="mt-2"><strong><span class="text-danger">*</span>Jumlah perbelanjaan mestilah sama dengan jumlah resit yang dimuat naik. </strong></p>
+                            </div>
+
+                            
+
+                        </div>
+                    </div>
+
                     <div class="card mb-4" id="section_b">
                         <div class="card-body">
-                            <h5 class="font-weight-700">Bahagian B - Muat Naik Resit</h5>
+                            <h5 class="font-weight-700">Bahagian C - Muat Naik Resit</h5>
                             <hr class="my-10px">
 
                             <div class="mb-0 receipt_input_container">
@@ -256,24 +274,12 @@ $(document).ready(function() {
                                     <input type="file" class="form-control" id="inputGroupFile02" name="resits[]">
                                 </div>
                                 <div class="invalid-feedback"></div>
+                        
                             </div>
-                        </div>
-                    </div>
-
-
-                    <div class="card mb-4" id="payment">
-                        <div class="card-body">
-                            <h5 class="font-weight-700">Bahagian C - Jumlah Pembelian</h5>
-                            <hr class="my-10px">
-
-                            <div class="mb-3">
-                                <label for="total_cost" class="form-label mb-1">Jumlah Pembelian <span class="text-danger">*</span></label>
-                                <input type="text" inputmode="numeric" name="total" value="" class="form-control" value="{{ old('total') }}">
-                                <div class="invalid-feedback"></div>
-                            </div>
+                            <p class="text-center mt-2">Dengan menekan butang Hantar,saya mengakui segala butiran adalah benar. </p>
 
                             <div class="row justify-content-center">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mt-3">
                                     <div class="mb-0 text-center">
                                         <button type="submit" class="btn btn-maha-green btn-lg w-100 text-white">
                                             Hantar
@@ -281,7 +287,6 @@ $(document).ready(function() {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </form>
