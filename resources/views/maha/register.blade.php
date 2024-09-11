@@ -76,8 +76,8 @@ $(document).ready(function() {
             "know_platform[]": "Sila pilih sekurang-kurangnya satu pilihan.",
             "resits[]": "Sila muat naik sekurang-kurangnya satu resit.",
             total: {
-                required: "Jumlah Pembelian diperlukan.",
-                number: "Jumlah Pembelian mesti dalam format angka.",
+                required: "Jumlah perbelanjaan diperlukan.",
+                number: "Jumlah perbelanjaan mesti dalam format angka.",
                 min: "Jumlah perbelanjaan mesti sekurang-kurangnya RM50.00" // Custom message for the min rule
             }
         },
