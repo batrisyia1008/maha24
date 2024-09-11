@@ -17,13 +17,23 @@
     <script>
         $(document).ready(function() {
 
-            flatpickr("#statesQuery", {
-                dateFormat: "Y-m-d",
-                defaultDate: "{{ $startDate ?? '' }}", // Set the default date if available
-                onChange: function(selectedDates, dateStr, instance) {
-                    // Redirect to the same page with the selected date as a query parameter
-                    window.location.search = '?start_date=' + dateStr;
-                }
+            $('#statesQuery').on('change', function() {
+                var selectedDate = $(this).val(); // Get the selected date
+                $.ajax({
+                    url: "{{ route('maha.state.data') }}", // Route to fetch data
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}", // CSRF token for security
+                        start_date: selectedDate
+                    },
+                    success: function(response) {
+                        // Update the chart with the new data
+                        updateChart(response.statesdata);
+                    },
+                    error: function(xhr) {
+                        console.error("An error occurred: " + xhr.status + " " + xhr.statusText);
+                    }
+                });
             });
 
             // Data returned from the controller
@@ -41,7 +51,7 @@
                     labels: labels,
                     datasets: [{
                         label: 'Negeri',
-                        data: dataValues,  // Populated data from stateData
+                        data: dataValues, // Populated data from stateData
                         backgroundColor: 'rgb(0, 102, 51)',
                         borderColor: 'rgb(255, 255, 255)',
                         borderWidth: 1
@@ -56,24 +66,54 @@
                 }
             });
 
-            var gd= $('#genderDoughnutChart')[0].getContext('2d');
-            var genderDoughnutChart = new Chart(gd, {
-                type: 'doughnut',
-                data: {
-                    //labels: ['Perempuan', 'Lelaki'],
-                    datasets: [{
-                        data: [{{ $genderData['female'] }}, {{ $genderData['male'] }}],
-                        backgroundColor: [' rgb(0, 102, 51)', 'rgb(255, 255, 0)'],
+            // Function to update the chart with new data
+            function updateChart(newStateData) {
+                var updatedDataValues = labels.map(function(label) {
+                    return newStateData[label];
+                });
 
-                    }]
+                myBarChart.data.datasets[0].data = updatedDataValues;
+                myBarChart.update();
+            }
+
+            // Make an AJAX request to fetch gender data on page load
+            $.ajax({
+                url: "{{ route('maha.gender.data') }}", // Route to fetch gender data
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}" // CSRF token for security
                 },
-                options: {
-                    responsive: true,
-                    legend: {
-                        display: false
-                    }
+                success: function(response) {
+                    // Update the chart with the returned gender data
+                    updateGenderChart(response.genderData);
+                },
+                error: function(xhr) {
+                    console.error("An error occurred: " + xhr.status + " " + xhr.statusText);
                 }
             });
+
+            // Gender chart configuration (to be updated with fetched data)
+            var ctx = $('#myGenderChart')[0].getContext('2d');
+            var myGenderChart = new Chart(ctx, {
+                type: 'pie', // You can choose other chart types if needed
+                data: {
+                    labels: ['Male', 'Female'], // Labels for gender
+                    datasets: [{
+                        label: 'Gender Distribution',
+                        data: [0, 0], // Initial data, to be updated dynamically
+                        backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 99, 132)'], // Colors for male and female
+                        borderColor: 'rgb(255, 255, 255)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+
+            // Function to update the chart with new gender data
+            function updateGenderChart(genderData) {
+                // Assuming the response provides gender count in the format: { male: 100, female: 120 }
+                myGenderChart.data.datasets[0].data = [genderData.male, genderData.female];
+                myGenderChart.update();
+            }
 
             function fetchDailySummaries() {
                 var selectedZone = $('#queryzoneSelect').val();
@@ -201,7 +241,7 @@
             <div class="card">
                 <h5 class="card-header">Jantina Peserta</h5>
                 <div class="card-body">
-                    <canvas id="genderDoughnutChart" class="chartjs mb-6" data-height="350"></canvas>
+                    <canvas id="myGenderChart" class="chartjs mb-6" data-height="350"></canvas>
                     <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                         <li class="ct-series-0 d-flex flex-column">
                             <h5 class="mb-0">Perempuan</h5>
