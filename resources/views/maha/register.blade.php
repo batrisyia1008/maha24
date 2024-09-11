@@ -78,7 +78,7 @@ $(document).ready(function() {
             total: {
                 required: "Jumlah Pembelian diperlukan.",
                 number: "Jumlah Pembelian mesti dalam format angka.",
-                min: "Jumlah Pembelian mesti sekurang-kurangnya RM50.00" // Custom message for the min rule
+                min: "Jumlah perbelanjaan mesti sekurang-kurangnya RM50.00" // Custom message for the min rule
             }
         },
         errorPlacement: function(error, element) {
