@@ -129,7 +129,7 @@
                     clearTimeout(shuffleTimeout);
 
                     const startTime = Date.now();
-                    const maxDuration = 3000; // 1 minute in milliseconds
+                    const maxDuration = 7000; // 7 seconds in milliseconds
                     let index = 0;
 
                     function updateDisplay() {
@@ -137,17 +137,7 @@
                             display.innerHTML = shuffledNames[0];
                             playSound();
                             startShuffle.removeAttribute('disabled');
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'Congratulations',
-                                text: `'${shuffledNames[0]}'`,
-                                showConfirmButton: true,
-                                timer: 3000
-                            }).then(() => {
-                                // Stop the sound after the Swal timer
-                                stopSound();
-                            });
+                            stopSound(); // Stop the sound after shuffle completes
                             return;
                         }
 
@@ -160,17 +150,7 @@
                             display.innerHTML = shuffledNames[0];
                             playSound();
                             startShuffle.removeAttribute('disabled');
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: 'Congratulations',
-                                text: `'${shuffledNames[0]}'`,
-                                showConfirmButton: true,
-                                timer: 3000
-                            }).then(() => {
-                                // Stop the sound after the Swal timer
-                                stopSound();
-                            });
+                            stopSound(); // Stop the sound after shuffle completes
                         }
                     }
 
