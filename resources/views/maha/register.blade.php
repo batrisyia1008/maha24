@@ -239,11 +239,8 @@ $(document).ready(function() {
                                 <label for="total_cost" class="form-label mb-1">Jumlah Perbelanjaan <span class="text-danger">*</span></label>
                                 <input type="text" inputmode="numeric" name="total" value="" class="form-control" value="{{ old('total') }}">
                                 <div class="invalid-feedback"></div>
-                                <p class="mt-2"><strong><span class="text-danger">*</span>Jumlah perbelanjaan mestilah sama dengan jumlah resit yang dimuat naik. </strong></p>
                             </div>
-
-                            
-
+                            <p class="mb-0"><strong><span class="text-danger">*</span>Jumlah perbelanjaan mestilah sama dengan jumlah resit yang dimuat naik. </strong></p>
                         </div>
                     </div>
 
@@ -252,7 +249,7 @@ $(document).ready(function() {
                             <h5 class="font-weight-700">Bahagian C - Muat Naik Resit</h5>
                             <hr class="my-10px">
 
-                            <div class="mb-0 receipt_input_container">
+                            <div class="mb-3 receipt_input_container">
                                 {{--<label for="registrationSlot" class="form-label">Muat Naik Resit Anda Disni</label>--}}
                                 <div class="input-group mb-3">
                                     <input type="file" class="form-control" id="inputGroupFile02" name="resits[]">
@@ -274,12 +271,13 @@ $(document).ready(function() {
                                     <input type="file" class="form-control" id="inputGroupFile02" name="resits[]">
                                 </div>
                                 <div class="invalid-feedback"></div>
-                        
+
                             </div>
-                            <p class="text-center mt-2">Dengan menekan butang Hantar,saya mengakui segala butiran adalah benar. </p>
+
+                            <p class="text-center">Dengan menekan butang Hantar,saya mengakui segala butiran adalah benar. </p>
 
                             <div class="row justify-content-center">
-                                <div class="col-md-6 mt-3">
+                                <div class="col-md-6">
                                     <div class="mb-0 text-center">
                                         <button type="submit" class="btn btn-maha-green btn-lg w-100 text-white">
                                             Hantar
