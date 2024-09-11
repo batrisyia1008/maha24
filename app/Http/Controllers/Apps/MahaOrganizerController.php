@@ -174,8 +174,8 @@ class MahaOrganizerController extends Controller
 
     public function getGenderData(Request $request)
     {
-        $maleCount = Visitor::where('gender', 'male')->count();
-        $femaleCount = Visitor::where('gender', 'female')->count();
+        $maleCount   = Visitor::where('gender', 'lelaki')->count();
+        $femaleCount = Visitor::where('gender', 'perempuan')->count();
 
         // Return the data as a JSON response
         return response()->json([
