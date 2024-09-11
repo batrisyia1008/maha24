@@ -292,7 +292,7 @@
                                     <div class="badge rounded p-2 bg-label-danger mb-2">
                                         <i class="ti ti-users ti-lg"></i>
                                     </div>
-                                    <h5 class="card-title mb-1 jumlah-peserta">{{--{{ $visitorCount }}--}}</h5> <!-- Class for visitor count -->
+                                    <h5 class="card-title mb-1 jumlah-peserta">0</h5>
                                     <p class="mb-0">Jumlah Peserta</p>
                                 </div>
                             </div>
@@ -304,7 +304,7 @@
                                     <div class="badge rounded p-2 bg-label-success mb-2">
                                         <i class="ti ti-shopping-cart ti-lg"></i>
                                     </div>
-                                    <h5 class="card-title mb-1 jumlah-perbelanjaan">RM {{--{{ number_format($totalSpending, 2) }}--}}</h5> <!-- Class for spending amount -->
+                                    <h5 class="card-title mb-1 jumlah-perbelanjaan">RM0.00</h5>
                                     <p class="mb-0">Jumlah Perbelanjaan</p>
                                 </div>
                             </div>
