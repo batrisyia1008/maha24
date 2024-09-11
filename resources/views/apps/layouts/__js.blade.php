@@ -25,7 +25,7 @@
     <script src="{{ asset('apps/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
     <script src="{{ asset('apps/vendor/libs/seatLayout/seatLayout.js') }}"></script>
     <script src="{{ asset('apps/vendor/libs/fancyapps/fancybox.umd.js') }}"></script>
-    <!-- <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script> -->
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 
     <!-- Main JS -->
     <script src="{{ asset('apps/js/main.js') }}"></script>

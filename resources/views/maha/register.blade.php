@@ -59,7 +59,8 @@ $(document).ready(function() {
             },
             total: {
                 required: true,
-                number: true
+                number: true,
+                min: 50
             }
         },
         messages: {
@@ -74,7 +75,11 @@ $(document).ready(function() {
             gender: "Jantina diperlukan.",
             "know_platform[]": "Sila pilih sekurang-kurangnya satu pilihan.",
             "resits[]": "Sila muat naik sekurang-kurangnya satu resit.",
-            total: "Jumlah Pembelian diperlukan dan mesti dalam format angka."
+            total: {
+                required: "Jumlah Pembelian diperlukan.",
+                number: "Jumlah Pembelian mesti dalam format angka.",
+                min: "Jumlah Pembelian mesti sekurang-kurangnya RM50.00" // Custom message for the min rule
+            }
         },
         errorPlacement: function(error, element) {
             // Log the error message and target element
