@@ -103,18 +103,25 @@ class MahaOrganizerController extends Controller
         return response()->json($transformedArray);
     }
 
-    public function dailySum(Request $request)
+    public function dailySummaries(Request $request)
     {
         $zone_id = $request->zone_id;
         $date = $request->date;
+        $query = Visitor::query();
+        if (!is_null($zone_id)) {
+            $query->where('zone_id', $zone_id);
+        }
 
-        // Fetch total visitor count and total spending based on zone and date
-        $visitorCount = Visitor::where('zone_id', $zone_id)->whereDate('created_at', $date)->count();
-        $totalSpending = Visitor::where('zone_id', $zone_id)->whereDate('created_at', $date)->sum('total'); // Assuming 'total' is the spending column
+        if (!is_null($date)) {
+            $query->whereDate('created_at', $date);
+        }
 
+        $visitorCount = $query->count();
+        $totalSpending = $query->sum('total'); // Assuming 'total' is the spending column
         return response()->json([
             'visitorCount' => $visitorCount,
             'totalSpending' => $totalSpending
         ]);
     }
+
 }
