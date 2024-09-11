@@ -10,6 +10,10 @@
             background-position: bottom center;
             background-repeat: no-repeat;
         }
+        .button-xxl{
+            border-color: #FFFFFF;
+            border-width: 3px;
+        }
         @media only screen and (max-width: 600px) {
             body {
                 min-height: 100vh;
