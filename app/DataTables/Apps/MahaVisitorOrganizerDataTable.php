@@ -66,6 +66,27 @@ class MahaVisitorOrganizerDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
+                    ])
+                    ->parameters([
+                        'dom' => '<"row mx-1"<"col-sm-12 col-md-3" l><"col-sm-12 col-md-9"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center flex-wrap me-1"<"me-3"f>B>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                        'buttons' => [
+                            [
+                                'extend' => 'collection',
+                                'text' => '<i class="fa fa-download"></i> Export',
+                                'className' => 'btn btn-primary dropdown-toggle mb-3 mb-md-0 waves-effect waves-light',
+                                'buttons' => [
+                                    ['extend' => 'excel', 'text' => 'Export to Excel'],
+                                    ['extend' => 'csv', 'text' => 'Export to CSV'],
+                                    ['extend' => 'pdf', 'text' => 'Export to PDF'],
+                                    ['extend' => 'print', 'text' => 'Print'],
+                                ],
+                            ],
+                            [
+                                'extend' => 'reload',
+                                'text' => '<i class="fa fa-refresh"></i> Reload',
+                                'className' => 'btn btn-secondary mb-3 mb-md-0 waves-effect waves-light',
+                            ]
+                        ],
                     ]);
     }
 

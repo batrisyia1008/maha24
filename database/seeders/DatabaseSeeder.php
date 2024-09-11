@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             // PermissionSeeder::class,
             // UserSeeder::class,
             // ZoneSeeder::class,
-            DataClearSeeder::class
+            // DataClearSeeder::class
+            VisitorSeeder::class,
         ]);
     }
 }
