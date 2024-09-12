@@ -68,7 +68,7 @@
 
 @section('page-minicup')
 
-    <div id="welcome-body" class="container py-sm-4 my-sm-4 py-4 my-4 d-sm-block d-flex justify-content-center align-items-center">
+    <div id="welcome-body" class="container py-sm-4 my-sm-4 py-2 my-2 d-sm-block d-flex justify-content-center align-items-center">
         <div>
             <div class="row justify-content-center">
                 <div class="col-md-3 col-5">
