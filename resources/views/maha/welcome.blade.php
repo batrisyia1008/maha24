@@ -88,7 +88,8 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-9 col-12 py-sm-0 my-sm-0 py-1 my-1">
-                    <h4 class="text-center pb-3 fw-700">Sertai kami di tapak <br> <i>RHYTHM OF THE FARMERS (ROTF)</i> <br> bertempat di D Lereng MAEPS Serdang untuk pengalaman yang mengujakan dan pelbagai aktiviti yang disajikan.</h4>
+                    <h4 class="text-center pb-4 fw-700">Sertai kami di tapak <br> <i>RHYTHM OF THE FARMERS (ROTF)</i> <br> bertempat di D Lereng MAEPS Serdang</h4>
+                    {{--<p class="text-center pb-3"><a href="#submit" class="btn btn-link text-black">Terus kebawah</a></p>--}}
 
                     <div class="text-center text-black fw-700">
                         <a class="btn btn-maha-green btn-lg border-2 border-white px-4 py-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -150,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center">
+            <div id="submit" class="row justify-content-center">
                 <div class="col-md-12 py-sm-3 my-sm-3 py-3 my-3 text-center">
                     <a href="{{ route('maha.register-form') }}" class="btn button-xxl px-5 btn-maha-green">Teruskan</a>
                 </div>
