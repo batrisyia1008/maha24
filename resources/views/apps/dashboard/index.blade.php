@@ -150,7 +150,7 @@
 
 @section('content')
 
-    <div class="row mb-4">
+    <div class="row mb-sm-4 gap-sm-0 gap-4">
         <!-- Subscriber Gained -->
         <div class="col-xl-3 col-lg-3 col-sm-6">
             <div class="card h-100">
@@ -234,24 +234,24 @@
     </div>
 
     <!-- Container Row -->
-    <div class="row">
+    <div class="row mb-sm-4 gap-sm-0 gap-4">
 
         <!-- Doughnut Chart -->
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-4 col-12">
             <div class="card">
                 <h5 class="card-header">Jantina Peserta</h5>
                 <div class="card-body">
                     <canvas id="myGenderChart" class="chartjs mb-6" data-height="350"></canvas>
                     <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                         <li class="ct-series-0 d-flex flex-column">
-                            <h5 class="mb-0">Perempuan</h5>
+                            <h5 class="mb-0">Wanita</h5>
                             <span class="badge badge-dot my-2 cursor-pointer rounded-pill" style="background-color: rgb(0, 102, 51);width:35px; height:6px;"></span>
-                            <div class="text-muted">{{ $genderData['female'] }}</div>
+                            <div class="text-muted">{{ $genderData['wanita'] }}</div>
                         </li>
                         <li class="ct-series-1 d-flex flex-column">
                             <h5 class="mb-0">Lelaki</h5>
                             <span class="badge badge-dot my-2 cursor-pointer rounded-pill" style="background-color: rgb(255, 255, 0);width:35px; height:6px;"></span>
-                            <div class="text-muted">{{ $genderData['male'] }}</div>
+                            <div class="text-muted">{{ $genderData['lelaki'] }}</div>
                         </li>
                     </ul>
                 </div>
@@ -259,7 +259,7 @@
         </div>
 
         <!-- Earning Reports -->
-        <div class="col-lg-8 col-6">
+        <div class="col-lg-8 col-12">
             <div class="card h-100">
                 <div class="card-header pb-0 d-flex justify-content-between">
                     <div class="card-title">
@@ -285,8 +285,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-2 col-6">
+                    <div class="row gap-sm-0 gap-4">
+                        <div class="col-lg-6 col-sm-2 col-12">
                             <div class="card h-100 border border-success">
                                 <div class="card-body text-center">
                                     <div class="badge rounded p-2 bg-label-danger mb-2">
@@ -298,7 +298,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-sm-2 col-6">
+                        <div class="col-lg-6 col-sm-2 col-12">
                             <div class="card h-100 border border-success">
                                 <div class="card-body text-center">
                                     <div class="badge rounded p-2 bg-label-success mb-2">

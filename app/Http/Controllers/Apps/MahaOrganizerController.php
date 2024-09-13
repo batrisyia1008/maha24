@@ -58,8 +58,8 @@ class MahaOrganizerController extends Controller
         }
 
         $genderData = [
-            'male' => Visitor::where('gender', 'male')->count(),
-            'female' => Visitor::where('gender', 'female')->count(),
+            'lelaki' => Visitor::where('gender', 'lelaki')->count(),
+            'wanita' => Visitor::where('gender', 'wanita')->count(),
         ];
 
         $todayVisitorsCount = Visitor::whereDate('created_at', today())->count();
