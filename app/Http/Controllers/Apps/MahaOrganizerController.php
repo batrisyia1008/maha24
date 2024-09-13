@@ -87,9 +87,10 @@ class MahaOrganizerController extends Controller
 
     public function luckyDrawName()
     {
-        $rotf     = Zone::where('name', 'RHYTHM OF THE FARMERS (ROTF)')->first();
+        $rotf        = Zone::where('name', 'RHYTHM OF THE FARMERS (ROTF)')->first();
+        $excludedIds = [1, 2, 3, 4, 5, 11, 15]; // Example IDs to exclude
         // $visitors = Visitor::where('zone_id', $rotf->id)->get();
-        $visitors = Visitor::all();
+        $visitors = Visitor::whereNotIn('id', $excludedIds)->get();
 
         $transformedData = $visitors->map(function ($item) {
             $icNumber = str_pad($item->ic_number, 6, '0', STR_PAD_LEFT);
