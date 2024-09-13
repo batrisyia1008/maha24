@@ -95,7 +95,7 @@ class MahaOrganizerController extends Controller
         $transformedData = $visitors->map(function ($item) {
             $icNumber = str_pad($item->ic_number, 6, '0', STR_PAD_LEFT);
             $lastSixDigits = substr($icNumber, -6);
-            $maxNameLength = 30;
+            $maxNameLength = 40;
             $name = strlen($item->name) > $maxNameLength ? substr($item->name, 0, $maxNameLength) . '...' : $item->name;
             $item->formatted_name = $name . ' (' . $lastSixDigits . ')';
             return $item;

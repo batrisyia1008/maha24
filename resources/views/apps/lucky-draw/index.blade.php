@@ -218,7 +218,7 @@
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-body display-shuffle d-flex justify-content-center align-items-center">
+                                <div class="card-body display-shuffle d-flex justify-content-center align-items-center text-center">
                                     <div id="display"></div>
                                 </div>
                             </div>
