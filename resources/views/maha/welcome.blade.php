@@ -88,7 +88,8 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-9 col-12 py-sm-0 my-sm-0 py-1 my-1">
-                    <h4 class="text-center pb-4 fw-700">Sertai kami di tapak <br> <i>RHYTHM OF THE FARMERS (ROTF)</i> <br> bertempat di D Lereng MAEPS Serdang</h4>
+                    <h4 class="text-center pb-4 fw-700">Sertai kami di tapak <br> <i>RHYTHM OF THE FARMERS (ROTF)</i> <br> bertempat di
+                        <a class="text-blue" target="_blank" href="https://www.google.com/maps/dir//D+Lereng+MAEPS,+XMHW%2BH5,+43400+Seri+Kembangan,+Selangor/@2.9789331,101.6542391,13z/data=!4m8!4m7!1m0!1m5!1m1!1s0x31cdb5002a91ac0b:0xb3f7cb52892c534d!2m2!1d101.6954385!2d2.9789339?entry=ttu&g_ep=EgoyMDI0MDkxMC4wIKXMDSoASAFQAw%3D%3D">D Lereng MAEPS Serdang</a></h4>
                     {{--<p class="text-center pb-3"><a href="#submit" class="btn btn-link text-black">Terus kebawah</a></p>--}}
 
                     <div class="text-center text-black fw-700">
