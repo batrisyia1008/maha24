@@ -9,13 +9,121 @@
 @endpush
 
 @push('script')
-    <script src="{{ asset('apps/js/cards-statistics.js') }}"></script>
+    {{--<script src="{{ asset('apps/js/cards-statistics.js') }}"></script>--}}
     <script src="{{ asset('apps/js/cards-analytics.js') }}"></script>
     <script src="{{ asset('apps/js/cards-actions.js') }}"></script>
     <script src="{{ asset('apps/js/tables-datatables-advanced.js') }}"></script>
 
     <script>
         $(document).ready(function() {
+            // Set up the CSRF token in AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
+
+            function fetchVisitorData() {
+                $.post('{{ route('maha.visitor.total') }}', function(data) {
+                    const totalVisitors = data.total;
+                    const totalSpending = data.spending_total;
+
+                    $.post('{{ route('maha.visitor.daily') }}', function(data) {
+                        const dailyVisitors = data.daily;
+                        const dailySpending = data.spending_daily;
+
+                        renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending);
+                    });
+                });
+            }
+
+            function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending) {
+                var totalVisitorsOptions = {
+                    series: [{
+                        name: 'Total Visitors',
+                        data: [totalVisitors]
+                    }],
+                    chart: {
+                        type: 'line'
+                    },
+                    xaxis: {
+                        categories: ['Overall Visitors']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                var dailyVisitorsOptions = {
+                    series: [{
+                        name: 'Daily Visitors',
+                        data: [dailyVisitors]
+                    }],
+                    chart: {
+                        type: 'line'
+                    },
+                    xaxis: {
+                        categories: ['Daily Visitors']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                var totalSpendingOptions = {
+                    series: [{
+                        name: 'Total Spending',
+                        data: [totalSpending]
+                    }],
+                    chart: {
+                        type: 'line'
+                    },
+                    xaxis: {
+                        categories: ['Overall Spending']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Spending'
+                        }
+                    }
+                };
+
+                var dailySpendingOptions = {
+                    series: [{
+                        name: 'Daily Spending',
+                        data: [dailySpending]
+                    }],
+                    chart: {
+                        type: 'line'
+                    },
+                    xaxis: {
+                        categories: ['Daily Spending']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Spending'
+                        }
+                    }
+                };
+
+                var totalVisitorsChart = new ApexCharts(document.querySelector("#total-visitors-chart"), totalVisitorsOptions);
+                totalVisitorsChart.render();
+
+                var dailyVisitorsChart = new ApexCharts(document.querySelector("#daily-visitors-chart"), dailyVisitorsOptions);
+                dailyVisitorsChart.render();
+
+                var totalSpendingChart = new ApexCharts(document.querySelector("#total-spending-chart"), totalSpendingOptions);
+                totalSpendingChart.render();
+
+                var dailySpendingChart = new ApexCharts(document.querySelector("#daily-spending-chart"), dailySpendingOptions);
+                dailySpendingChart.render();
+            }
+
+            fetchVisitorData();
 
             $('#statesQuery').on('change', function() {
                 var selectedDate = $(this).val(); // Get the selected date
@@ -150,7 +258,7 @@
 
 @section('content')
 
-    <div class="row mb-sm-4 gap-sm-0 gap-4">
+    <div class="row mb-4 gap-sm-0 gap-4">
         <!-- Subscriber Gained -->
         <div class="col-xl-3 col-lg-3 col-sm-6">
             <div class="card h-100">
@@ -163,7 +271,7 @@
                     <h5 class="card-title mb-0 mt-2">{{ number_format($overallVisitorsCount) }}</h5>
                     <small>Jumlah Keseluruhan Peserta</small>
                 </div>
-                <div id="subscriberGained"></div>
+                <div id="total-visitors-chart" style="height: 300px;"></div>
             </div>
         </div>
 
@@ -179,7 +287,7 @@
                     <h5 class="card-title mb-0 mt-2">{{ number_format($todayVisitorsCount) }}</h5>
                     <small>Jumlah Peserta Hari Ini</small>
                 </div>
-                <div id="subscriberGained"></div>
+                <div id="daily-visitors-chart" style="height: 300px;"></div>
             </div>
         </div>
 
@@ -193,10 +301,10 @@
                             <i class='ti ti-shopping-cart ti-26px'></i>
                         </span>
                     </div>
-                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($todaySpending, 2) }}</h5>
+                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($overallSpending, 2) }}</h5>
                     <small>Jumlah Keseluruhan Perbelanjaan</small>
                 </div>
-                <div id="quarterlySales"></div>
+                <div id="total-spending-chart" style="height: 300px;"></div>
             </div>
         </div>
 
@@ -209,10 +317,10 @@
                                 <i class='ti ti-shopping-cart ti-26px'></i>
                             </span>
                     </div>
-                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($overallSpending, 2) }}</h5>
+                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($todaySpending, 2) }}</h5>
                     <small>Jumlah Perbelanjaan Hari Ini</small>
                 </div>
-                <div id="quarterlySales"></div>
+                <div id="daily-spending-chart" style="height: 300px;"></div>
             </div>
         </div>
     </div>

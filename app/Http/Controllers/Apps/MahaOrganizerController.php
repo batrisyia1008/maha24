@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apps\Visitor;
 use Illuminate\Http\Request;
 use App\Models\Apps\Zone;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -184,6 +185,27 @@ class MahaOrganizerController extends Controller
                 'male' => $maleCount,
                 'female' => $femaleCount
             ]
+        ]);
+    }
+
+    public function totalVisitorTotal()
+    {
+        $totalVisitors = Visitor::count();
+        $totalSpending = Visitor::sum('total');
+        return response()->json([
+            'total' => $totalVisitors,
+            'spending_total' => $totalSpending
+        ]);
+    }
+
+    public function totalVisitorDaily()
+    {
+        $today = Carbon::today();
+        $dailyVisitors = Visitor::whereDate('created_at', $today)->count();
+        $dailySpending = Visitor::whereDate('created_at', $today)->sum('total');
+        return response()->json([
+            'daily' => $dailyVisitors,
+            'spending_daily' => $dailySpending
         ]);
     }
 }
