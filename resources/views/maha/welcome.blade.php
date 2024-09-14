@@ -28,6 +28,11 @@
                 padding: inherit;
                 font-size: inherit;
             }
+
+            #popup-content {
+                max-width: 400px;
+                height: 52vh;
+            }
         }
 
         #popup-content {
