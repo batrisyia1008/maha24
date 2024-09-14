@@ -29,12 +29,65 @@
                 font-size: inherit;
             }
         }
+
+        #popup-content {
+            position: relative;
+            padding: 0;
+        }
+
+        #popup-content .box-card {
+            width: 95%;
+            bottom: 30px;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
     </style>
 @endpush
 
 @push('onpagescript')
     <script>
         $(document).ready(function() {
+            // Initialize Fancybox for the hidden div and trigger it on page load
+            Fancybox.show([{ src: "#popup-content", type: "inline" }]);
+
+            // Define a function to update the highlight event
+            function updateHighlightEvent() {
+                // Define event highlights for each day
+                const eventHighlights = {
+                    "2024-09-11": "ZANBO Night Show: Slam",
+                    "2024-09-12": "Forum Perdana: Panel & VIP Arrival",
+                    "2024-09-13": "JACA Night Show: Aman Acustic",
+                    "2024-09-14": "DURIO Night Show: Atas Angin",
+                    "2024-09-15": "Malam Gembira Maulidurasul Qasidah & Maulid: Al-Hawariyyun",
+                    "2024-09-16": "JIWA MERDEKA Night Show: Kopratasa & Noraniza Idris",
+                    "2024-09-17": "MANGIFERA Night Show: Bulan Acoustic & Usop Mentor",
+                    "2024-09-18": "MUSA Night Show: XPDC",
+                    "2024-09-19": "MAHA2024 Berselawat: Habib Najmudin Al-Khered Sayyidi Sheikh Niyaz Habib Alwi Mustafa Al-Haddad",
+                    "2024-09-20": "GARCINIA Night Show: Sentuhan Band",
+                    "2024-09-21": "CROPS TO CHORDS Show: Jamal Abdillah, Uk's & Bey Soba Bey",
+                    "2024-09-22": "CARAMBOLA Night Show: RAMLI SARIP"
+                };
+
+                // Get today's date in 'YYYY-MM-DD' format
+                const today = new Date().toISOString().split('T')[0];
+
+                // Check if today's date matches one in the eventHighlights object
+                if (eventHighlights.hasOwnProperty(today)) {
+                    // Update the content in the #highlight-event div, replacing the colon with a line break
+                    const eventText = eventHighlights[today].replace(":", ":<br>");
+                    $('#highlight-event').html(eventText); // Use .html() to render the <br> tag
+                } else {
+                    // If today's date is not within the range, display default message
+                    $('#highlight-event').text("No special highlights for today.");
+                }
+            }
+
+            // Call the function to update the highlight event
+            updateHighlightEvent();
+
             // Function to adjust the height of welcome-body
             function adjustWelcomeBodyHeight() {
                 var windowWidth = $(window).width();
@@ -155,6 +208,18 @@
             <div id="submit" class="row justify-content-center">
                 <div class="col-md-12 py-sm-3 my-sm-3 py-3 my-3 text-center">
                     <a href="{{ route('maha.register-form') }}" class="btn button-xxl px-5 btn-maha-green">Teruskan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none;" id="popup-content">
+        <img src="{{ asset('assets/images/HOTAIR_POSTER_1.png') }}" alt="" style="max-width:840px;">
+        <div class="box-card position-absolute">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-center pb-1">Persembahan malam ini</h5>
+                    <h4 id="highlight-event" class="mb-0 pb-0 text-center fw-800"></h4>
                 </div>
             </div>
         </div>
