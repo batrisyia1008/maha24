@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Apps\Zone;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 
 class MahaOrganizerController extends Controller
@@ -190,17 +190,24 @@ class MahaOrganizerController extends Controller
 
     public function totalVisitorTotal()
     {
-        $monthData     = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as total_visitors, SUM(total) as total_spending')
-                            ->whereBetween('created_at', ['2024-09-10', '2024-09-22'])
-                            ->groupBy(DB::raw('DATE(created_at)'))
-                            ->orderBy('created_at', 'asc')
-                            ->get();
-        $totalVisitors = $monthData->count();
-        $totalSpending = $monthData->sum('total');
+        $dates = ['2024-09-10', '2024-09-22'];
+
+        // Query to get data between specific dates
+        $monthData = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as total_visitors, SUM(total) as total_spending')
+            ->whereBetween('created_at', $dates)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Sum all visitors from the grouped result
+        $totalVisitors = Visitor::count();  // Sum of 'total_visitors' from the query result
+        $totalSpending = Visitor::sum('total');  // Sum of 'total_spending' from the query result
+
+        // Return the JSON response
         return response()->json([
-            'total'          => $totalVisitors,
-            'spending_total' => $totalSpending,
-            'months'         => $monthData
+            'total_visitor'  => $totalVisitors,
+            'total_spending' => $totalSpending,
+            'months'         => $monthData  // This will contain the daily data for the selected range
         ]);
     }
 

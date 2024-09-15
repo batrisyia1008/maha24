@@ -16,141 +16,141 @@
 
     <script>
         $(document).ready(function() {
-// Set up the CSRF token in AJAX requests
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-    }
-});
+            // Set up the CSRF token in AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
 
-function fetchVisitorData() {
-    // First POST request to fetch total visitors and spending
-    $.post('{{ route('maha.visitor.total') }}', function(data) {
-        console.log(data)
-        const totalVisitors = data.total;
-        const totalSpending = data.spending_total;
+            function fetchVisitorData() {
+                // First POST request to fetch total visitors and spending
+                $.post('{{ route('maha.visitor.total') }}', function(data) {
+                    console.log(data)
+                    const totalVisitors = data.total_visitor;
+                    const totalSpending = data.total_spending;
 
-        // Process the data for daily visitors and spending from the 'months' array
-        const dailyVisitors = data.months.map(item => parseInt(item.total_visitors)); // Assuming 'total' represents the visitors count for that day
-        const dailySpending = data.months.map(item => parseFloat(item.total_spending)); // Assuming 'total' is the spending for that day
-        const dailyDates = data.months.map(item => new Date(item.date).toISOString().split('T')[0]);  // Format the 'created_at' date as 'YYYY-MM-DD'
+                    // Process the data for daily visitors and spending from the 'months' array
+                    const dailyVisitors = data.months.map(item => parseInt(item.total_visitors)); // Assuming 'total' represents the visitors count for that day
+                    const dailySpending = data.months.map(item => parseFloat(item.total_spending)); // Assuming 'total' is the spending for that day
+                    const dailyDates = data.months.map(item => new Date(item.date).toISOString().split('T')[0]);  // Format the 'created_at' date as 'YYYY-MM-DD'
 
-        // Render the charts after processing the data
-        renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates);
-    });
-}
-
-function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates) {
-    // Total Visitors Chart Configuration
-    var totalVisitorsOptions = {
-        series: [{
-            name: 'Total Visitors',
-            data: [totalVisitors]
-        }],
-        chart: {
-            type: 'area'
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        xaxis: {
-            categories: ['Overall Visitors']
-        },
-        yaxis: {
-            title: {
-                text: 'Visitors'
+                    // Render the charts after processing the data
+                    renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates);
+                });
             }
-        }
-    };
 
-    // Daily Visitors Chart Configuration (using actual dates)
-    var dailyVisitorsOptions = {
-        series: [{
-            name: 'Daily Visitors',
-            data: dailyVisitors  // Use the daily visitors data from 'total' in the data return
-        }],
-        chart: {
-            type: 'area'
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        xaxis: {
-            categories: dailyDates,  // Use the 'created_at' dates
-            title: {
-                text: 'Dates'
+            function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates) {
+                // Total Visitors Chart Configuration
+                var totalVisitorsOptions = {
+                    series: [{
+                        name: 'Total Visitors',
+                        data: [totalVisitors]
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: ['Overall Visitors']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                // Daily Visitors Chart Configuration (using actual dates)
+                var dailyVisitorsOptions = {
+                    series: [{
+                        name: 'Daily Visitors',
+                        data: dailyVisitors  // Use the daily visitors data from 'total' in the data return
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: dailyDates,  // Use the 'created_at' dates
+                        title: {
+                            text: 'Dates'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                // Total Spending Chart Configuration
+                var totalSpendingOptions = {
+                    series: [{
+                        name: 'Total Spending',
+                        data: [totalSpending]
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: ['Overall Spending']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Spending (RM)'
+                        }
+                    }
+                };
+
+                // Daily Spending Chart Configuration
+                var dailySpendingOptions = {
+                    series: [{
+                        name: 'Daily Spending',
+                        data: dailySpending  // Use the daily spending data
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: dailyDates,  // Use the same dates for daily spending
+                        title: {
+                            text: 'Dates'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Spending (RM)'
+                        }
+                    }
+                };
+
+                // Render each chart using ApexCharts
+                var totalVisitorsChart = new ApexCharts(document.querySelector("#total-visitors-chart"), totalVisitorsOptions);
+                totalVisitorsChart.render();
+
+                var dailyVisitorsChart = new ApexCharts(document.querySelector("#daily-visitors-chart"), dailyVisitorsOptions);
+                dailyVisitorsChart.render();
+
+                var totalSpendingChart = new ApexCharts(document.querySelector("#total-spending-chart"), totalSpendingOptions);
+                totalSpendingChart.render();
+
+                var dailySpendingChart = new ApexCharts(document.querySelector("#daily-spending-chart"), dailySpendingOptions);
+                dailySpendingChart.render();
             }
-        },
-        yaxis: {
-            title: {
-                text: 'Visitors'
-            }
-        }
-    };
 
-    // Total Spending Chart Configuration
-    var totalSpendingOptions = {
-        series: [{
-            name: 'Total Spending',
-            data: [totalSpending]
-        }],
-        chart: {
-            type: 'area'
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        xaxis: {
-            categories: ['Overall Spending']
-        },
-        yaxis: {
-            title: {
-                text: 'Spending (RM)'
-            }
-        }
-    };
-
-    // Daily Spending Chart Configuration
-    var dailySpendingOptions = {
-        series: [{
-            name: 'Daily Spending',
-            data: dailySpending  // Use the daily spending data
-        }],
-        chart: {
-            type: 'area'
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        xaxis: {
-            categories: dailyDates,  // Use the same dates for daily spending
-            title: {
-                text: 'Dates'
-            }
-        },
-        yaxis: {
-            title: {
-                text: 'Spending (RM)'
-            }
-        }
-    };
-
-    // Render each chart using ApexCharts
-    var totalVisitorsChart = new ApexCharts(document.querySelector("#total-visitors-chart"), totalVisitorsOptions);
-    totalVisitorsChart.render();
-
-    var dailyVisitorsChart = new ApexCharts(document.querySelector("#daily-visitors-chart"), dailyVisitorsOptions);
-    dailyVisitorsChart.render();
-
-    var totalSpendingChart = new ApexCharts(document.querySelector("#total-spending-chart"), totalSpendingOptions);
-    totalSpendingChart.render();
-
-    var dailySpendingChart = new ApexCharts(document.querySelector("#daily-spending-chart"), dailySpendingOptions);
-    dailySpendingChart.render();
-}
-
-// Call fetchVisitorData to start fetching data and rendering charts
-fetchVisitorData();
+            // Call fetchVisitorData to start fetching data and rendering charts
+            fetchVisitorData();
 
 
             $('#statesQuery').on('change', function() {
