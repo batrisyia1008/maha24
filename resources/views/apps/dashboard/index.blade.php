@@ -48,7 +48,10 @@ function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending
             data: [totalVisitors]
         }],
         chart: {
-            type: 'line'
+            type: 'area'
+        },
+        stroke: {
+          curve: 'smooth'
         },
         xaxis: {
             categories: ['Overall Visitors']
@@ -67,7 +70,10 @@ function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending
             data: dailyVisitors  // Use the daily visitors data from 'total' in the data return
         }],
         chart: {
-            type: 'line'
+            type: 'area'
+        },
+        stroke: {
+          curve: 'smooth'
         },
         xaxis: {
             categories: dailyDates,  // Use the 'created_at' dates
@@ -89,7 +95,10 @@ function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending
             data: [totalSpending]
         }],
         chart: {
-            type: 'line'
+            type: 'area'
+        },
+        stroke: {
+          curve: 'smooth'
         },
         xaxis: {
             categories: ['Overall Spending']
@@ -108,7 +117,10 @@ function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending
             data: dailySpending  // Use the daily spending data
         }],
         chart: {
-            type: 'line'
+            type: 'area'
+        },
+        stroke: {
+          curve: 'smooth'
         },
         xaxis: {
             categories: dailyDates,  // Use the same dates for daily spending
