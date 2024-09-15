@@ -190,11 +190,17 @@ class MahaOrganizerController extends Controller
 
     public function totalVisitorTotal()
     {
-        $totalVisitors = Visitor::count();
-        $totalSpending = Visitor::sum('total');
+        $monthData     = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as total_visitors, SUM(total) as total_spending')
+                            ->whereBetween('created_at', ['2024-09-10', '2024-09-22'])
+                            ->groupBy(DB::raw('DATE(created_at)'))
+                            ->orderBy('created_at', 'asc')
+                            ->get();
+        $totalVisitors = $monthData->count();
+        $totalSpending = $monthData->sum('total');
         return response()->json([
-            'total' => $totalVisitors,
-            'spending_total' => $totalSpending
+            'total'          => $totalVisitors,
+            'spending_total' => $totalSpending,
+            'months'         => $monthData
         ]);
     }
 
