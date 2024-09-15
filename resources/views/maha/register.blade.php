@@ -60,7 +60,7 @@ $(document).ready(function() {
             total: {
                 required: true,
                 number: true,
-                min: 1
+                min: 0.01
             }
         },
         messages: {
@@ -78,7 +78,7 @@ $(document).ready(function() {
             total: {
                 required: "Jumlah perbelanjaan diperlukan.",
                 number: "Jumlah perbelanjaan mesti dalam format angka.",
-                min: "Jumlah perbelanjaan mesti sekurang-kurangnya RM1.00" // Custom message for the min rule
+                min: "Jumlah perbelanjaan mesti sekurang-kurangnya RM0.01" // Custom message for the min rule
             }
         },
         errorPlacement: function(error, element) {
