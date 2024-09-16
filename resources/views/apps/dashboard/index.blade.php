@@ -26,7 +26,6 @@
             function fetchVisitorData() {
                 // First POST request to fetch total visitors and spending
                 $.post('{{ route('maha.visitor.total') }}', function(data) {
-                    console.log(data)
                     const totalVisitors = data.total_visitor;
                     const totalSpending = data.total_spending;
 
@@ -39,6 +38,55 @@
                     renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates);
                 });
             }
+
+            $.post('{{ route('maha.visitor.zone') }}', function (data) {
+                const zone = data.zones;
+                const visitor = data.visitor;
+                const expenses = data.expenses;
+
+                console.log(zone)
+                console.log(visitor)
+                console.log(expenses)
+                zonesSummaries(zone, visitor, expenses)
+            })
+
+            function zonesSummaries(zones, spending, visitor) {
+                var zonesSum = {
+                    series: [{
+                        name: 'Visitor',
+                        data: visitor
+                    }, {
+                        name: 'Spending',
+                        data: spending
+                    }],
+                    chart: {
+                        height: 500,
+                        type: 'area'
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    xaxis: {
+                        labels: {
+                            rotate: -45
+                        },
+                        categories: zones
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                var zoneChart = new ApexCharts(document.querySelector("#zoneChart"), zonesSum);
+                zoneChart.render();
+            }
+
+            // zonesSummaries();
 
             function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates) {
                 // Total Visitors Chart Configuration
@@ -421,7 +469,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row gap-sm-0 gap-4">
+                    <div class="row gap-sm-0 gap-4 mb-4">
                         <div class="col-lg-6 col-sm-2 col-12">
                             <div class="card h-100 border border-success">
                                 <div class="card-body text-center">
@@ -444,6 +492,11 @@
                                     <p class="mb-0">Jumlah Perbelanjaan</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="zoneChart" style="height: 500px;"></div>
                         </div>
                     </div>
                 </div>

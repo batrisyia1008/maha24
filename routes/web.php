@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('state-data', [MahaOrganizerController::class, 'getStateData'])->name('maha.state.data');
     Route::post('gender-data', [MahaOrganizerController::class, 'getGenderData'])->name('maha.gender.data');
     Route::post('total-visitor-total', [MahaOrganizerController::class, 'totalVisitorTotal'])->name('maha.visitor.total');
-    Route::post('total-visitor-daily', [MahaOrganizerController::class, 'totalVisitorDaily'])->name('maha.visitor.daily');
+    Route::post('total-visitor-zone', [MahaOrganizerController::class, 'totalVisitorZone'])->name('maha.visitor.zone');
 });
 
 

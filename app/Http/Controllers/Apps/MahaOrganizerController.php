@@ -211,14 +211,21 @@ class MahaOrganizerController extends Controller
         ]);
     }
 
-    public function totalVisitorDaily()
+    public function totalVisitorZone()
     {
-        $today = Carbon::today();
-        $dailyVisitors = Visitor::whereDate('created_at', $today)->count();
-        $dailySpending = Visitor::whereDate('created_at', $today)->sum('total');
+        $zones = Zone::all();
+        $zoneName = [];
+        $visitor = [];
+        $expenses = [];
+        foreach ($zones as $zone) {
+            $zoneName[] = $zone->name;
+            $visitor[] = $zone->visitors->count();
+            $expenses[] = $zone->visitors->sum('total');
+        }
         return response()->json([
-            'daily' => $dailyVisitors,
-            'spending_daily' => $dailySpending
+            'zones' => $zoneName,
+            'visitor' => $visitor,
+            'expenses' => $expenses
         ]);
     }
 }
