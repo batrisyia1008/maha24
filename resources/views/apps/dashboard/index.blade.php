@@ -9,13 +9,197 @@
 @endpush
 
 @push('script')
-    <script src="{{ asset('apps/js/cards-statistics.js') }}"></script>
+    {{--<script src="{{ asset('apps/js/cards-statistics.js') }}"></script>--}}
     <script src="{{ asset('apps/js/cards-analytics.js') }}"></script>
     <script src="{{ asset('apps/js/cards-actions.js') }}"></script>
     <script src="{{ asset('apps/js/tables-datatables-advanced.js') }}"></script>
 
     <script>
         $(document).ready(function() {
+            // Set up the CSRF token in AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
+
+            function fetchVisitorData() {
+                // First POST request to fetch total visitors and spending
+                $.post('{{ route('maha.visitor.total') }}', function(data) {
+                    const totalVisitors = data.total_visitor;
+                    const totalSpending = data.total_spending;
+
+                    // Process the data for daily visitors and spending from the 'months' array
+                    const dailyVisitors = data.months.map(item => parseInt(item.total_visitors)); // Assuming 'total' represents the visitors count for that day
+                    const dailySpending = data.months.map(item => parseFloat(item.total_spending)); // Assuming 'total' is the spending for that day
+                    const dailyDates = data.months.map(item => new Date(item.date).toISOString().split('T')[0]);  // Format the 'created_at' date as 'YYYY-MM-DD'
+
+                    // Render the charts after processing the data
+                    renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates);
+                });
+            }
+
+            $.post('{{ route('maha.visitor.zone') }}', function (data) {
+                const zone = data.zones;
+                const visitor = data.visitor;
+                const expenses = data.expenses;
+
+                console.log(zone)
+                console.log(visitor)
+                console.log(expenses)
+                zonesSummaries(zone, visitor, expenses)
+            })
+
+            function zonesSummaries(zones, spending, visitor) {
+                var zonesSum = {
+                    series: [{
+                        name: 'Visitor',
+                        data: visitor
+                    }, {
+                        name: 'Spending',
+                        data: spending
+                    }],
+                    chart: {
+                        height: 500,
+                        type: 'area'
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    xaxis: {
+                        labels: {
+                            rotate: -45
+                        },
+                        categories: zones
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                var zoneChart = new ApexCharts(document.querySelector("#zoneChart"), zonesSum);
+                zoneChart.render();
+            }
+
+            // zonesSummaries();
+
+            function renderCharts(totalVisitors, dailyVisitors, totalSpending, dailySpending, dailyDates) {
+                // Total Visitors Chart Configuration
+                var totalVisitorsOptions = {
+                    series: [{
+                        name: 'Total Visitors',
+                        data: [totalVisitors]
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: ['Overall Visitors']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                // Daily Visitors Chart Configuration (using actual dates)
+                var dailyVisitorsOptions = {
+                    series: [{
+                        name: 'Daily Visitors',
+                        data: dailyVisitors  // Use the daily visitors data from 'total' in the data return
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: dailyDates,  // Use the 'created_at' dates
+                        title: {
+                            text: 'Dates'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Visitors'
+                        }
+                    }
+                };
+
+                // Total Spending Chart Configuration
+                var totalSpendingOptions = {
+                    series: [{
+                        name: 'Total Spending',
+                        data: [totalSpending]
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: ['Overall Spending']
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Spending (RM)'
+                        }
+                    }
+                };
+
+                // Daily Spending Chart Configuration
+                var dailySpendingOptions = {
+                    series: [{
+                        name: 'Daily Spending',
+                        data: dailySpending  // Use the daily spending data
+                    }],
+                    chart: {
+                        type: 'area'
+                    },
+                    stroke: {
+                      curve: 'smooth'
+                    },
+                    xaxis: {
+                        categories: dailyDates,  // Use the same dates for daily spending
+                        title: {
+                            text: 'Dates'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Spending (RM)'
+                        }
+                    }
+                };
+
+                // Render each chart using ApexCharts
+                var totalVisitorsChart = new ApexCharts(document.querySelector("#total-visitors-chart"), totalVisitorsOptions);
+                totalVisitorsChart.render();
+
+                var dailyVisitorsChart = new ApexCharts(document.querySelector("#daily-visitors-chart"), dailyVisitorsOptions);
+                dailyVisitorsChart.render();
+
+                var totalSpendingChart = new ApexCharts(document.querySelector("#total-spending-chart"), totalSpendingOptions);
+                totalSpendingChart.render();
+
+                var dailySpendingChart = new ApexCharts(document.querySelector("#daily-spending-chart"), dailySpendingOptions);
+                dailySpendingChart.render();
+            }
+
+            // Call fetchVisitorData to start fetching data and rendering charts
+            fetchVisitorData();
+
 
             $('#statesQuery').on('change', function() {
                 var selectedDate = $(this).val(); // Get the selected date
@@ -150,7 +334,7 @@
 
 @section('content')
 
-    <div class="row mb-4">
+    <div class="row mb-4 gap-sm-0 gap-4">
         <!-- Subscriber Gained -->
         <div class="col-xl-3 col-lg-3 col-sm-6">
             <div class="card h-100">
@@ -163,7 +347,7 @@
                     <h5 class="card-title mb-0 mt-2">{{ number_format($overallVisitorsCount) }}</h5>
                     <small>Jumlah Keseluruhan Peserta</small>
                 </div>
-                <div id="subscriberGained"></div>
+                <div id="total-visitors-chart" style="height: 300px;"></div>
             </div>
         </div>
 
@@ -179,7 +363,7 @@
                     <h5 class="card-title mb-0 mt-2">{{ number_format($todayVisitorsCount) }}</h5>
                     <small>Jumlah Peserta Hari Ini</small>
                 </div>
-                <div id="subscriberGained"></div>
+                <div id="daily-visitors-chart" style="height: 300px;"></div>
             </div>
         </div>
 
@@ -193,10 +377,10 @@
                             <i class='ti ti-shopping-cart ti-26px'></i>
                         </span>
                     </div>
-                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($todaySpending, 2) }}</h5>
+                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($overallSpending, 2) }}</h5>
                     <small>Jumlah Keseluruhan Perbelanjaan</small>
                 </div>
-                <div id="quarterlySales"></div>
+                <div id="total-spending-chart" style="height: 300px;"></div>
             </div>
         </div>
 
@@ -209,10 +393,10 @@
                                 <i class='ti ti-shopping-cart ti-26px'></i>
                             </span>
                     </div>
-                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($overallSpending, 2) }}</h5>
+                    <h5 class="card-title mb-0 mt-2">RM {{ number_format($todaySpending, 2) }}</h5>
                     <small>Jumlah Perbelanjaan Hari Ini</small>
                 </div>
-                <div id="quarterlySales"></div>
+                <div id="daily-spending-chart" style="height: 300px;"></div>
             </div>
         </div>
     </div>
@@ -234,24 +418,24 @@
     </div>
 
     <!-- Container Row -->
-    <div class="row">
+    <div class="row mb-sm-4 gap-sm-0 gap-4">
 
         <!-- Doughnut Chart -->
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-4 col-12">
             <div class="card">
                 <h5 class="card-header">Jantina Peserta</h5>
                 <div class="card-body">
                     <canvas id="myGenderChart" class="chartjs mb-6" data-height="350"></canvas>
                     <ul class="doughnut-legend d-flex justify-content-around ps-0 mb-2 pt-1">
                         <li class="ct-series-0 d-flex flex-column">
-                            <h5 class="mb-0">Perempuan</h5>
+                            <h5 class="mb-0">Wanita</h5>
                             <span class="badge badge-dot my-2 cursor-pointer rounded-pill" style="background-color: rgb(0, 102, 51);width:35px; height:6px;"></span>
-                            <div class="text-muted">{{ $genderData['female'] }}</div>
+                            <div class="text-muted">{{ $genderData['wanita'] }}</div>
                         </li>
                         <li class="ct-series-1 d-flex flex-column">
                             <h5 class="mb-0">Lelaki</h5>
                             <span class="badge badge-dot my-2 cursor-pointer rounded-pill" style="background-color: rgb(255, 255, 0);width:35px; height:6px;"></span>
-                            <div class="text-muted">{{ $genderData['male'] }}</div>
+                            <div class="text-muted">{{ $genderData['lelaki'] }}</div>
                         </li>
                     </ul>
                 </div>
@@ -259,7 +443,7 @@
         </div>
 
         <!-- Earning Reports -->
-        <div class="col-lg-8 col-6">
+        <div class="col-lg-8 col-12">
             <div class="card h-100">
                 <div class="card-header pb-0 d-flex justify-content-between">
                     <div class="card-title">
@@ -285,8 +469,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-2 col-6">
+                    <div class="row gap-sm-0 gap-4 mb-4">
+                        <div class="col-lg-6 col-sm-2 col-12">
                             <div class="card h-100 border border-success">
                                 <div class="card-body text-center">
                                     <div class="badge rounded p-2 bg-label-danger mb-2">
@@ -298,7 +482,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-sm-2 col-6">
+                        <div class="col-lg-6 col-sm-2 col-12">
                             <div class="card h-100 border border-success">
                                 <div class="card-body text-center">
                                     <div class="badge rounded p-2 bg-label-success mb-2">
@@ -308,6 +492,11 @@
                                     <p class="mb-0">Jumlah Perbelanjaan</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="zoneChart" style="height: 500px;"></div>
                         </div>
                     </div>
                 </div>

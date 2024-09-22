@@ -218,7 +218,7 @@
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-body display-shuffle d-flex justify-content-center align-items-center">
+                                <div class="card-body display-shuffle d-flex justify-content-center align-items-center text-center">
                                     <div id="display"></div>
                                 </div>
                             </div>
@@ -229,7 +229,7 @@
 
                     <div class="row justify-content-center">
                         <div class="col-md-12 pt-sm-3 mt-sm-3 pt-3 mt-3 text-center">
-                            <a id="startShuffle" href="" class="btn button-xxl px-5 btn-maha-green">SHUFFLE</a>
+                            <a id="startShuffle" href="" class="btn button-xxl px-5 btn-maha-green">DRAW</a>
                         </div>
                     </div>
 
