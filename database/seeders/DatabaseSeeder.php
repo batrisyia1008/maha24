@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             // ZoneSeeder::class,
             // DataClearSeeder::class
             // VisitorSeeder::class,
+            AndaLusiaParticipantsSeeder::class
         ]);
     }
 }

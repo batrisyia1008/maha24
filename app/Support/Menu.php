@@ -30,14 +30,6 @@ class Menu
                         'text'       => __('Visitor'),
                         'target'     => '',
                     ],
-                    /*[
-                        'permission' => 'user-access',
-                        'url'        => null,
-                        'active_on'  => 'lucky-draw-list*',
-                        'icon'       => 'tf-icons ti ti-users',
-                        'text'       => __('Lucky Draw List'),
-                        'target'     => '',
-                    ],*/
                     [
                         'permission' => 'user-access',
                         'url'        => route('maha.lucky.draw'),
@@ -45,6 +37,14 @@ class Menu
                         'icon'       => 'tf-icons ti ti-star',
                         'text'       => __('Lucky Draw'),
                         'target'     => '_blank',
+                    ],
+                    [
+                        'permission' => 'user-access',
+                        'url'        => route('maha.lucky.draw.overwrite'),
+                        'active_on'  => 'overwrite*',
+                        'icon'       => 'tf-icons ti ti-users',
+                        'text'       => __('Lucky Draw Overwrite'),
+                        'target'     => '',
                     ],
                 ]
             ],
