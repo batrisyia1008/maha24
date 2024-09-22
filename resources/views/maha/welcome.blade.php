@@ -102,42 +102,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Rabu<br>11/09/2024</td>
-                        <td></td>
-                        <td>09:30 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Khamis<br>12/09/2024</td>
-                        <td>03:30 PM</td>
-                        <td>09:30 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Jumaat<br>13/09/2024</td>
-                        <td>03:30 PM</td>
-                        <td>09:30 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Sabtu<br>14/09/2024</td>
-                        <td>03:30 PM</td>
-                        <td>09:30 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Ahad<br>15/09/2024</td>
-                        <td>03:30 PM</td>
-                        <td>09:30 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Isnin<br>16/09/2024</td>
-                        <td>03:30 PM</td>
-                        <td>09:30 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Selasa<br>17/09/2024</td>
-                        <td>03:30 PM</td>
-                        <td>09:30 PM</td>
-                    </tr>
-                    
+                        <tr>
+                            <td><strong>Grand Prize</strong><br>Ahad<br>22/09/2024</td>
+                            <td></td>
+                            <td>08:30 PM</td>
+                        </tr> 
                     <!-- Add more rows as needed -->
                     </tbody>
                 </table>
