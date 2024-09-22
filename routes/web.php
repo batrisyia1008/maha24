@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('lucky-draw', [MahaOrganizerController::class, 'luckyDraw'])->name('maha.lucky.draw');
     Route::get('overwrite', [MahaOrganizerController::class, 'luckyDrawOverwrite'])->name('maha.lucky.draw.overwrite');
     Route::get('lucky-draw-name', [MahaOrganizerController::class, 'luckyDrawName'])->name('maha.lucky.draw.name');
+    Route::get('lucky-draw-winner', [MahaOrganizerController::class, 'luckyDrawWinner'])->name('maha.lucky.draw.winner');
     Route::post('daily-summaries', [MahaOrganizerController::class, 'dailySummaries'])->name('maha.daily.summaries');
     Route::post('state-data', [MahaOrganizerController::class, 'getStateData'])->name('maha.state.data');
     Route::post('gender-data', [MahaOrganizerController::class, 'getGenderData'])->name('maha.gender.data');

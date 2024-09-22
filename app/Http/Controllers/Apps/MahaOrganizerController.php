@@ -106,6 +106,19 @@ class MahaOrganizerController extends Controller
         return response()->json($transformedArray);
     }
 
+    public function luckyDrawWinner()
+    {
+        return [
+            '1winner' => 'MEGAT MUHAMMAD SUFI BIN AZLAN (146576)', // PS5
+            '2winner' => 'AIMAN SHAH BIN MAWARDI (140673)', // TV
+            '3winner' => 'MUHAMMAD SUFI BIN AZLAN (146576)', // TV
+        ];
+    }
+
+    public function luckyDrawOverwrite()
+    {
+        return view('apps.lucky-draw-overwrite.index');
+    }
     public function dailySummaries(Request $request)
     {
         $zone_id = $request->zone_id;
