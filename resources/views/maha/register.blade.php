@@ -60,7 +60,7 @@ $(document).ready(function() {
             total: {
                 required: true,
                 number: true,
-                min: 50
+                min: 0.01
             }
         },
         messages: {
@@ -78,7 +78,7 @@ $(document).ready(function() {
             total: {
                 required: "Jumlah perbelanjaan diperlukan.",
                 number: "Jumlah perbelanjaan mesti dalam format angka.",
-                min: "Jumlah perbelanjaan mesti sekurang-kurangnya RM50.00" // Custom message for the min rule
+                min: "Jumlah perbelanjaan mesti sekurang-kurangnya RM0.01" // Custom message for the min rule
             }
         },
         errorPlacement: function(error, element) {
@@ -132,7 +132,7 @@ $(document).ready(function() {
                         <div class="card-body">
 
                             <h5 class="font-weight-700">Bahagian A - Maklumat Peserta</h5>
-                            <p class="mt-2"><strong><span class="text-danger">*</span>Bagi melayakan anda untuk menyertai cabutan bertuah ini anda perlu berbelanja RM 50 dan keatas dimana-mana lokasi di dalam MAHA 2024. Sila memuat naik resit anda di Bahagian C.</strong></p>
+                            <p class="mt-2"><strong><span class="text-danger">*</span>Bagi melayakan anda untuk menyertai cabutan bertuah ini anda perlu berbelanja dimana-mana lokasi di dalam MAHA 2024. Sila muat naik resit anda di Bahagian C. {{--Bagi nilai minimum pembelian tidak tertakhluk dalam satu resit.--}}</strong></p>
                             <hr class="my-10px">
 
                             <input type="hidden" name="zone" value="{{ $zone->id }}" class="form-control mb-3" readonly>
@@ -251,7 +251,7 @@ $(document).ready(function() {
 
                     <div class="card mb-4" id="section_b">
                         <div class="card-body">
-                            <h5 class="font-weight-700">Bahagian C - Muat Naik Resit</h5>
+                            <h5 class="font-weight-700">Bahagian C - Muat Naik Resit (Resit daripada kedai atau resit imbasan QR (Duitnow) )</h5>
                             <hr class="my-10px">
 
                             <div class="mb-3 receipt_input_container">

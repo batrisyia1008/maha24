@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Apps\Visitor;
 use Illuminate\Http\Request;
 use App\Models\Apps\Zone;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 
 class MahaOrganizerController extends Controller
@@ -58,8 +59,8 @@ class MahaOrganizerController extends Controller
         }
 
         $genderData = [
-            'male' => Visitor::where('gender', 'male')->count(),
-            'female' => Visitor::where('gender', 'female')->count(),
+            'lelaki' => Visitor::where('gender', 'lelaki')->count(),
+            'wanita' => Visitor::where('gender', 'wanita')->count(),
         ];
 
         $todayVisitorsCount = Visitor::whereDate('created_at', today())->count();
@@ -87,14 +88,15 @@ class MahaOrganizerController extends Controller
 
     public function luckyDrawName()
     {
-        $rotf     = Zone::where('name', 'RHYTHM OF THE FARMERS (ROTF)')->first();
-        // $visitors = Visitor::where('zone_id', $rotf->id)->get();
-        $visitors = Visitor::all();
+        $rotf        = Zone::where('name', 'RHYTHM OF THE FARMERS (ROTF)')->first();
+        $excludedIds = [1, 2, 3, 4, 5, 11, 15]; // Example IDs to exclude
+        $visitors = Visitor::where('zone_id', $rotf->id)->whereNotIn('id', $excludedIds)->get();
+        // $visitors = Visitor::whereNotIn('id', $excludedIds)->get();
 
         $transformedData = $visitors->map(function ($item) {
             $icNumber = str_pad($item->ic_number, 6, '0', STR_PAD_LEFT);
             $lastSixDigits = substr($icNumber, -6);
-            $maxNameLength = 30;
+            $maxNameLength = 40;
             $name = strlen($item->name) > $maxNameLength ? substr($item->name, 0, $maxNameLength) . '...' : $item->name;
             $item->formatted_name = $name . ' (' . $lastSixDigits . ')';
             return $item;
@@ -183,6 +185,47 @@ class MahaOrganizerController extends Controller
                 'male' => $maleCount,
                 'female' => $femaleCount
             ]
+        ]);
+    }
+
+    public function totalVisitorTotal()
+    {
+        $dates = ['2024-09-10', '2024-09-22'];
+
+        // Query to get data between specific dates
+        $monthData = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as total_visitors, SUM(total) as total_spending')
+            ->whereBetween('created_at', $dates)
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Sum all visitors from the grouped result
+        $totalVisitors = Visitor::count();  // Sum of 'total_visitors' from the query result
+        $totalSpending = Visitor::sum('total');  // Sum of 'total_spending' from the query result
+
+        // Return the JSON response
+        return response()->json([
+            'total_visitor'  => $totalVisitors,
+            'total_spending' => $totalSpending,
+            'months'         => $monthData  // This will contain the daily data for the selected range
+        ]);
+    }
+
+    public function totalVisitorZone()
+    {
+        $zones = Zone::all();
+        $zoneName = [];
+        $visitor = [];
+        $expenses = [];
+        foreach ($zones as $zone) {
+            $zoneName[] = $zone->name;
+            $visitor[] = $zone->visitors->count();
+            $expenses[] = $zone->visitors->sum('total');
+        }
+        return response()->json([
+            'zones' => $zoneName,
+            'visitor' => $visitor,
+            'expenses' => $expenses
         ]);
     }
 }
