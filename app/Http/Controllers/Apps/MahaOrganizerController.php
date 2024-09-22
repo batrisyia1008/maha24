@@ -109,9 +109,9 @@ class MahaOrganizerController extends Controller
     public function luckyDrawWinner()
     {
         return [
-            '1winner' => 'MEGAT MUHAMMAD SUFI BIN AZLAN (146576)', // PS5
-            '2winner' => 'AIMAN SHAH BIN MAWARDI (140673)', // TV
-            '3winner' => 'MUHAMMAD SUFI BIN AZLAN (146576)', // TV
+            // '1winner' => 'MEGAT MUHAMMAD SUFI BIN AZLAN (146576)', // PS5
+            // '2winner' => 'AIMAN SHAH BIN MAWARDI (140673)', // TV
+            // '3winner' => 'MUHAMMAD SUFI BIN AZLAN (146576)', // TV
         ];
     }
 
