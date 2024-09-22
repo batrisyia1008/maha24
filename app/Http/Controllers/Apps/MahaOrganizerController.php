@@ -90,7 +90,7 @@ class MahaOrganizerController extends Controller
     {
         $rotf        = Zone::where('name', 'RHYTHM OF THE FARMERS (ROTF)')->first();
         $excludedIds = [1, 2, 3, 4, 5, 11, 15]; // Example IDs to exclude
-        $visitors = Visitor::where('zone_id', $rotf->id)->whereNotIn('id', $excludedIds)->get();
+        $visitors = Visitor::where('zone_id', $rotf->id)->whereNotIn('id', $excludedIds)->whereNotNull('ic_number')->get();
         // $visitors = Visitor::whereNotIn('id', $excludedIds)->get();
 
         $transformedData = $visitors->map(function ($item) {
