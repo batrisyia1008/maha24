@@ -15,9 +15,9 @@ class AndaLusiaParticipantsSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        Visitor::truncate();
-        Schema::enableForeignKeyConstraints();
+        // Schema::disableForeignKeyConstraints();
+        // Visitor::truncate();
+        // Schema::enableForeignKeyConstraints();
 
         // Path to your JSON file
         $jsonFile = database_path('data/maha_zone_data.json');
