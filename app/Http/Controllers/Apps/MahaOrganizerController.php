@@ -90,7 +90,17 @@ class MahaOrganizerController extends Controller
     {
         $rotf        = Zone::where('name', 'RHYTHM OF THE FARMERS (ROTF)')->first();
         $excludedIds = [1, 2, 3, 4, 5, 11, 15]; // Example IDs to exclude
-        $visitors = Visitor::where('zone_id', $rotf->id)->whereNotIn('id', $excludedIds)->whereNotNull('ic_number')->get();
+        $visitors = Visitor::where('zone_id', $rotf->id)
+            ->where(function($query) {
+                $query->whereNotNull('ic_number')
+                      ->where('ic_number', '!=', '');
+            })
+            ->where(function($query) {
+                $query->whereNotNull('email')
+                      ->where('email', '!=', '');
+            })
+            ->get();
+        Log::info($visitors);
         // $visitors = Visitor::whereNotIn('id', $excludedIds)->get();
 
         $transformedData = $visitors->map(function ($item) {
@@ -109,9 +119,14 @@ class MahaOrganizerController extends Controller
     public function luckyDrawWinner()
     {
         return [
-            // '1winner' => 'MEGAT MUHAMMAD SUFI BIN AZLAN (146576)', // PS5
-            // '2winner' => 'AIMAN SHAH BIN MAWARDI (140673)', // TV
-            // '3winner' => 'MUHAMMAD SUFI BIN AZLAN (146576)', // TV
+            // '1winner' => 'NORASYIKIN BINTI MOHAMAD (015998)', // Saga
+            // '1winner' => 'NORASYIKIN BINTI MOHAMAD (015998)', // Saga
+            // '2winner' => 'ZAHIRA BINTI SAAD (265302)', // Moto 1
+            // '3winner' => 'Megat Muhammad Sufi Bin Azlan (146576)', // Moto 2
+            // '4winner' => 'AIMAN SHAH BIN MAWARDI (140673)',// Digital watch
+            // '5winner' => 'AIZAT ZAMIR BIN ISMAIL (015579)',// SMART TV43inc
+            // '5winner' => 'Roslina Binti Abdul Rahman (075798)',// No
+            // '6winner' => 'SYAHRISAL BIN MUHADI (145661)',// SMART TV43inc
         ];
     }
 
@@ -203,7 +218,7 @@ class MahaOrganizerController extends Controller
 
     public function totalVisitorTotal()
     {
-        $dates = ['2024-09-10', '2024-09-22'];
+        $dates = ['2024-09-09', '2024-09-22'];
 
         // Query to get data between specific dates
         $monthData = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as total_visitors, SUM(total) as total_spending')
