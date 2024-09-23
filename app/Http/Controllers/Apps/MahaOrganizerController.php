@@ -218,7 +218,7 @@ class MahaOrganizerController extends Controller
 
     public function totalVisitorTotal()
     {
-        $dates = ['2024-09-09', '2024-09-22'];
+        $dates = ['2024-09-09, 23:59:59', '2024-09-22, 23:59:59'];
 
         // Query to get data between specific dates
         $monthData = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as total_visitors, SUM(total) as total_spending')

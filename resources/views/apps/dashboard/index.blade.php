@@ -54,10 +54,10 @@
                 var zonesSum = {
                     series: [{
                         name: 'Visitor',
-                        data: visitor
+                        data: spending
                     }, {
                         name: 'Spending',
-                        data: spending
+                        data: visitor
                     }],
                     chart: {
                         height: 500,
